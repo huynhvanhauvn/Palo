@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Palo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_user">Username</string>
+    <string name="login_pass">Password</string>
+    <string name="login_btn">Log In</string>
+    <string name="login_failed">Please type username and password correctly</string>
+    <string name="signup_btn">Sign Up</string>
+    <string name="home_recent">Newest Movies</string>
+    <string name="detail_director">Director</string>
+    <string name="detail_description">Description</string>
+    <string name="detail_screen">Screen writer</string>
+    <string name="detail_cast">Cast</string>
+    <string name="detail_date">Releasing date: </string>
+    <string name="detail_nation">Nation: </string>
+    <string name="detail_not_rating">Please select rating before sending</string>
+    <string name="detail_voted">You voted this movie</string>
+    <string name="review_opening">Introduction</string>
+    <string name="review_story">Story</string>
+    <string name="review_act">Acting</string>
+    <string name="review_picture">Cinema picture</string>
+    <string name="review_sound">Sound</string>
+    <string name="review_feeling">Feeling</string>
+    <string name="review_message">Message</string>
+    <string name="review_conclude">Conclude</string>
+    <string name="review_send">Send Review</string>
+</resources>
