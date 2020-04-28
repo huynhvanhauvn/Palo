@@ -4,6 +4,7 @@ import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
+import com.sbro.palo.Models.Quote;
 import com.sbro.palo.Models.User;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public interface Service {
 
     @GET("recentmovie.php")
     Observable<ArrayList<Movie>> recentMovie();
+
+    @GET("recentmovielist.php")
+    Observable<ArrayList<Movie>> recentMovieList();
 
     @FormUrlEncoded
     @POST("artistname.php")
@@ -77,4 +81,12 @@ public interface Service {
     @Multipart
     @POST("uploadImage.php")
     Observable<String> uploadImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type);
+
+    @FormUrlEncoded
+    @POST("quote.php")
+    Observable<ArrayList<Quote>> getQuote(@Field("idMovie") String idMovie);
+
+    @FormUrlEncoded
+    @POST("reviewdetail.php")
+    Observable<ArrayList<Quote>> getReview(@Field("id") String id);
 }

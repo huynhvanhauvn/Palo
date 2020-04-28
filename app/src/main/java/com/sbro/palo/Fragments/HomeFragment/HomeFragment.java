@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.MovieDetail.MovieDetailActivity;
+import com.sbro.palo.Activities.MovieList.MovieListActivity;
 import com.sbro.palo.Adapter.RecentAdapter;
 import com.sbro.palo.Adapter.SlideAdapter;
 import com.sbro.palo.Models.Background;
@@ -38,6 +40,7 @@ public class HomeFragment extends Fragment implements HomeView {
     private RecyclerView recyclerView;
     private ConstraintLayout imgLayout;
     private HomePresenter presenter;
+    private ImageView imageView;
 
     public HomeFragment() {
 
@@ -56,6 +59,7 @@ public class HomeFragment extends Fragment implements HomeView {
         viewPager = (ViewPager2) view.findViewById(R.id.home_viewPager);
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_recent);
         imgLayout = (ConstraintLayout) view.findViewById(R.id.home_layout);
+        imageView = (ImageView) view.findViewById(R.id.home_img_more_recent);
 
         presenter = new HomePresenter(this);
         presenter.showBackground();
@@ -146,6 +150,15 @@ public class HomeFragment extends Fragment implements HomeView {
             public void OnItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), MovieDetailActivity.class);
                 intent.putExtra("id",movies.get(position).getId());
+                startActivity(intent);
+            }
+        });
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MovieListActivity.class);
+                intent.putExtra(MovieListActivity.TYPE,MovieListActivity.TYPE_RECENT);
                 startActivity(intent);
             }
         });
