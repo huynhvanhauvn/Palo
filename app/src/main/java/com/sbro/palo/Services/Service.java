@@ -5,6 +5,7 @@ import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
 import com.sbro.palo.Models.Quote;
+import com.sbro.palo.Models.Review;
 import com.sbro.palo.Models.User;
 
 import java.util.ArrayList;
@@ -88,5 +89,5 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("reviewdetail.php")
-    Observable<ArrayList<Quote>> getReview(@Field("id") String id);
+    Observable<Review> getReview(@Field("id") String id);
 }

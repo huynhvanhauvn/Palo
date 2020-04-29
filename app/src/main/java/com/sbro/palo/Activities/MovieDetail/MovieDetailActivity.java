@@ -27,10 +27,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.sbro.palo.Activities.ReviewActivity.ReviewActivity;
+import com.sbro.palo.Activities.ReviewDetailActivity.ReviewDetailActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Adapter.ArtistAdapter;
+import com.sbro.palo.Adapter.ReviewAdapter;
 import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.Quote;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
@@ -50,8 +53,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     private ConstraintLayout layout, ratingLayout, ratingPoint, title;
     private TextView txtTitle, txtRating, txtDescription,
             txtLabelDescription, txtDirector, txtWriter, txtCast,
-            txtDateLabel, txtDate, txtNationLabel, txtNation;
-    private RecyclerView recyclerDirector, recyclerWriter, recyclerCast;
+            txtDateLabel, txtDate, txtNationLabel, txtNation, txtReviewsLabel;
+    private RecyclerView recyclerDirector, recyclerWriter, recyclerCast, recyclerQuote;
     private RatingBar ratingBar;
     private CardView cardSend;
 
@@ -84,6 +87,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         txtNationLabel = (TextView) findViewById(R.id.detail_txt_nation_label);
         txtNation = (TextView) findViewById(R.id.detail_txt_nation);
         title = (ConstraintLayout) findViewById(R.id.detail_title);
+        txtReviewsLabel = (TextView) findViewById(R.id.detail_txt_quote_label);
+        recyclerQuote = (RecyclerView) findViewById(R.id.detail_recycler_quote);
 
         ratingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +193,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
             txtNation.setVisibility(View.VISIBLE);
             txtNation.setText(movie.getNation());
         }
+        if(movie.getId() != null && !movie.getId().equals("")) {
+            presenter.showReviews(movie.getId(),movie.getTitle(),movie.getPoster());
+        }
 
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(WelcomeActivity.SHARED_DATA, Context.MODE_PRIVATE);
         final String id = preferences.getString(WelcomeActivity.USER_ID,"");
@@ -233,6 +241,28 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     public void updateRating(String rating) {
         final DecimalFormat format = new DecimalFormat("0.0");
         txtRating.setText(format.format(Float.parseFloat(rating)));
+    }
+
+    @Override
+    public void showReviews(final ArrayList<Quote> quotes, final String title, final String poster) {
+        if(quotes.size()>0) {
+            txtReviewsLabel.setVisibility(View.VISIBLE);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(RecyclerView.VERTICAL);
+            ReviewAdapter adapter = new ReviewAdapter(getApplicationContext(),quotes);
+            recyclerQuote.setLayoutManager(layoutManager);
+            recyclerQuote.setAdapter(adapter);
+            adapter.setOnItemClickListener(new ReviewAdapter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(View view, int position) {
+                    Intent intent = new Intent(MovieDetailActivity.this, ReviewDetailActivity.class);
+                    intent.putExtra(ReviewDetailActivity.ID,quotes.get(position).getId());
+                    intent.putExtra(ReviewDetailActivity.TITLE,title);
+                    intent.putExtra(ReviewDetailActivity.POSTER,poster);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private void showArtist(String ids, RecyclerView recycler, TextView textView) {

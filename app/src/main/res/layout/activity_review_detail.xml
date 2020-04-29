@@ -4,6 +4,211 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ReviewDetailActivity.ReviewDetailActivity">
+    tools:context=".Activities.ReviewDetailActivity.ReviewDetailActivity"
+    android:id="@+id/review_detail_layout">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:background="@color/colorBackgroundDark">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/review_detail_txt_title"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginVertical="30dp"
+                android:text="Title"/>
+            <TextView
+                android:id="@+id/review_detail_txt_intro"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_title"
+
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="30dp"/>
+            <TextView
+                android:id="@+id/review_detail_txt_story"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_intro"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/review_detail_img_story"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_story"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/review_detail_txt_act"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_img_story"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/review_detail_img_act"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_act"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/review_detail_txt_pic"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_img_act"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/review_detail_img_pic"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_pic"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/review_detail_txt_sound"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_img_pic"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/review_detail_img_sound"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_sound"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/review_detail_txt_feel"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_img_sound"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/review_detail_img_feel"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_feel"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/review_detail_txt_msg"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_img_feel"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <ImageView
+                android:id="@+id/review_detail_img_msg"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_txt_msg"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/review_detail_txt_end"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/review_detail_img_msg"
+
+                android:visibility="gone"
+                android:textSize="17dp"
+                android:textColor="@color/colorText"
+                android:justificationMode="inter_word"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

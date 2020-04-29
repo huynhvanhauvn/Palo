@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.sbro.palo.Activities.MovieDetail.MovieDetailActivity;
 import com.sbro.palo.Adapter.RecentAdapter;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.R;
@@ -38,8 +40,16 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
     }
 
     @Override
-    public void showList(ArrayList<Movie> movies) {
+    public void showList(final ArrayList<Movie> movies) {
         RecentAdapter adapter = new RecentAdapter(getApplicationContext(),movies);
         recycler.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), MovieDetailActivity.class);
+                intent.putExtra("id",movies.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 }

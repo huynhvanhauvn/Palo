@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sbro.palo.Adapter.ArtistAdapter;
 import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.Quote;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
@@ -49,7 +50,6 @@ public class MoviePresenter implements MovieInterface {
     public void getArtist(Context context, String[] ids, final RecyclerView recycler, final TextView textView) {
         final ArrayList<Artist> artists = new ArrayList<>();
         final ArtistAdapter adapter = new ArtistAdapter(context,artists);
-        Log.d("hvhau",ids.length+"");
         for(String id : ids) {
             Observable<Artist> artistObservable = service.artist(id);
             artistObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
@@ -104,6 +104,21 @@ public class MoviePresenter implements MovieInterface {
                                             }
                                         }
                                     });
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void showReviews(String id, final String title, final String poster) {
+        Log.d("hvhau",id);
+        Observable<ArrayList<Quote>> observable = service.getQuote(id);
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ArrayList<Quote>>() {
+                    @Override
+                    public void call(ArrayList<Quote> quotes) {
+                        if(quotes != null) {
+                            movieView.showReviews(quotes,title,poster);
                         }
                     }
                 });

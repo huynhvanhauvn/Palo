@@ -15,6 +15,7 @@
     <string name="detail_cast">Cast</string>
     <string name="detail_date">Releasing date: </string>
     <string name="detail_nation">Nation: </string>
+    <string name="detail_reviews">Reviews</string>
     <string name="detail_not_rating">Please select rating before sending</string>
     <string name="detail_voted">You voted this movie</string>
     <string name="review_opening">Introduction</string>

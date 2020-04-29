@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sbro.palo.Models.Quote;
 import com.sbro.palo.R;
 
 import java.util.ArrayList;
@@ -15,9 +18,9 @@ import java.util.ArrayList;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.RecyclerViewHolder> {
 
     private Context context;
-    private ArrayList<String> quotes;
+    private ArrayList<Quote> quotes;
 
-    public ReviewAdapter(Context context, ArrayList<String> quotes) {
+    public ReviewAdapter(Context context, ArrayList<Quote> quotes) {
         this.context = context;
         this.quotes = quotes;
     }
@@ -30,8 +33,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.RecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
+        Quote quote = quotes.get(position);
+        holder.txt.setText(quote.getEnd());
+        holder.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClickListener != null){
+                    //return clicked view and its index
+                    onItemClickListener.OnItemClick(view, position);
+                }
+            }
+        });
     }
 
     @Override
@@ -40,8 +53,23 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.RecyclerVi
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        private TextView txt;
+        private ConstraintLayout line;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
+            txt = (TextView) itemView.findViewById(R.id.item_txt_review);
+            line = (ConstraintLayout) itemView.findViewById(R.id.item_review_line);
         }
+    }
+
+    public interface OnItemClickListener{
+        public void OnItemClick(View view, int position);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    //method to set item click in adapter
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 }

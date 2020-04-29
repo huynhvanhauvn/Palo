@@ -38,6 +38,12 @@ public class Review {
     @SerializedName("actingImage")
     @Expose
     private String actingImage;
+    @SerializedName("picture")
+    @Expose
+    private String picture;
+    @SerializedName("pictureImage")
+    @Expose
+    private String pictureImage;
     @SerializedName("sound")
     @Expose
     private String sound;
@@ -146,6 +152,22 @@ public class Review {
 
     public void setActingImage(String actingImage) {
         this.actingImage = actingImage;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getPictureImage() {
+        return pictureImage;
+    }
+
+    public void setPictureImage(String pictureImage) {
+        this.pictureImage = pictureImage;
     }
 
     public String getSound() {

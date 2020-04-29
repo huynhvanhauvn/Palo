@@ -7,4 +7,7 @@
     <color name="colorInput">#59828282</color>
     <color name="colorBtnTitle">#FFFFFF</color>
     <color name="colorBase">#73000000</color>
+    <color name="colorText">#F8FFFFFF</color>
+    <color name="colorBackgroundDark">#D2000000</color>
+    <color name="colorBackgroundLight">#A1000000</color>
 </resources>

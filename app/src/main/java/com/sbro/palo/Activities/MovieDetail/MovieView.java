@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sbro.palo.Adapter.ArtistAdapter;
 import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.Quote;
 
 import java.util.ArrayList;
 
@@ -15,4 +16,5 @@ public interface MovieView {
     void getArtist(ArtistAdapter adapter, RecyclerView recycler, TextView textView);
     void showRating();
     void updateRating(String rating);
+    void showReviews(ArrayList<Quote> quotes, String title, String poster);
 }
