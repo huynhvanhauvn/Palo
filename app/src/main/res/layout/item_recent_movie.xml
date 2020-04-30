@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:textColor="@color/colorText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/home_img_poster"
                 app:layout_constraintBottom_toTopOf="@+id/home_txt_director"
@@ -49,6 +50,7 @@
                 app:layout_constraintLeft_toRightOf="@+id/home_img_poster"
                 app:layout_constraintBottom_toBottomOf="parent"
 
+                android:textColor="@color/colorText"
                 android:maxLines="1"
                 android:layout_marginLeft="16dp"
                 android:text="Updating..."/>

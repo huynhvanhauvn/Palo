@@ -3,20 +3,25 @@ package com.sbro.palo.Activities.ReviewDetailActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Models.Review;
 import com.sbro.palo.R;
 
@@ -29,7 +34,9 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
     private TextView txtTitle, txtIntro, txtStory, txtAct, txtPic, txtSound, txtFeel, txtMsg, txtEnd;
     private ImageView imgStory, imgAct, imgPic, imgSound, imgFeel, imgMsg;
     private ReviewDetailPresenter presenter;
-    private ConstraintLayout layout;
+    private ConstraintLayout layout, layoutVote;
+    private CardView cardSend;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,9 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
         imgFeel = (ImageView) findViewById(R.id.review_detail_img_feel);
         imgMsg = (ImageView) findViewById(R.id.review_detail_img_msg);
         layout = (ConstraintLayout) findViewById(R.id.review_detail_layout);
+        layoutVote = (ConstraintLayout) findViewById(R.id.review_detail_layout_vote);
+        ratingBar = (RatingBar) findViewById(R.id.review_detail_rating_star);
+        cardSend = (CardView) findViewById(R.id.review_detail_card_send);
     }
 
     @Override
@@ -133,5 +143,33 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
             txtEnd.setVisibility(View.VISIBLE);
             txtEnd.setText(review.getEnd());
         }
+
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(WelcomeActivity.SHARED_DATA,
+                Context.MODE_PRIVATE);
+        String idUser = preferences.getString(WelcomeActivity.USER_ID,"");
+        if(!idUser.equals("")) {
+            presenter.enableVote(idUser,id);
+        }
+    }
+
+    @Override
+    public void enableVote(final String idUser, final String idReview) {
+        layoutVote.setVisibility(View.VISIBLE);
+        cardSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ratingBar.getRating() > 0) {
+                    presenter.rating(ratingBar.getRating(),idUser,idReview);
+                } else {
+                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.detail_not_rating),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void voteSuccess() {
+        layoutVote.setVisibility(View.GONE);
     }
 }

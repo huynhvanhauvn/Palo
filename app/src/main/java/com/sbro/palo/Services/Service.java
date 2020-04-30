@@ -61,12 +61,20 @@ public interface Service {
     Observable<String> vote(@Field("rating") float rating, @Field("idUser") String idUser, @Field("idMovie") String idMovie);
 
     @FormUrlEncoded
+    @POST("reviewvote.php")
+    Observable<String> voteReview(@Field("rating") float rating, @Field("idUser") String idUser, @Field("idReview") String idReview);
+
+    @FormUrlEncoded
     @POST("rating.php")
     Observable<String> rating(@Field("id") String id);
 
     @FormUrlEncoded
     @POST("checkVoted.php")
     Observable<String> checkVoted(@Field("idUser") String idUser, @Field("idMovie") String idMovie);
+
+    @FormUrlEncoded
+    @POST("checkReviewVoted.php")
+    Observable<String> checkReviewVoted(@Field("idUser") String idUser, @Field("idReview") String idMovie);
 
     @FormUrlEncoded
     @POST("review.php")
@@ -90,4 +98,15 @@ public interface Service {
     @FormUrlEncoded
     @POST("reviewdetail.php")
     Observable<Review> getReview(@Field("id") String id);
+
+    @GET("keyword.php")
+    Observable<ArrayList<String>> getPopularTags();
+
+    @FormUrlEncoded
+    @POST("searchmovie.php")
+    Observable<ArrayList<Movie>> searchResult(@Field("keyword") String keyword);
+
+    @FormUrlEncoded
+    @POST("updatekeyword.php")
+    Observable<String> updateKeyword(@Field("keyword") String keyword);
 }

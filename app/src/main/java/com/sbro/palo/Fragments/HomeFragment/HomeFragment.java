@@ -2,19 +2,26 @@ package com.sbro.palo.Fragments.HomeFragment;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -24,6 +31,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.MovieDetail.MovieDetailActivity;
 import com.sbro.palo.Activities.MovieList.MovieListActivity;
+import com.sbro.palo.Activities.SearchActivity.SearchActivity;
 import com.sbro.palo.Adapter.RecentAdapter;
 import com.sbro.palo.Adapter.SlideAdapter;
 import com.sbro.palo.Models.Background;
@@ -31,6 +39,7 @@ import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
 import com.sbro.palo.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements HomeView {
@@ -41,6 +50,9 @@ public class HomeFragment extends Fragment implements HomeView {
     private ConstraintLayout imgLayout;
     private HomePresenter presenter;
     private ImageView imageView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView btnSearch;
+    private NestedScrollView scrollView;
 
     public HomeFragment() {
 
@@ -60,6 +72,44 @@ public class HomeFragment extends Fragment implements HomeView {
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_recent);
         imgLayout = (ConstraintLayout) view.findViewById(R.id.home_layout);
         imageView = (ImageView) view.findViewById(R.id.home_img_more_recent);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_scroll);
+        btnSearch = (ImageView) view.findViewById(R.id.home_btn_search);
+        scrollView = (NestedScrollView) view.findViewById(R.id.home_nested);
+
+        try {
+            Field f = swipeRefreshLayout.getClass().getDeclaredField("mCircleView");
+            f.setAccessible(true);
+            ImageView img = (ImageView)f.get(swipeRefreshLayout);
+            img.setAlpha(0.0f);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                btnSearch.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                    if(i1-i3>0) {
+                        btnSearch.setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
 
         presenter = new HomePresenter(this);
         presenter.showBackground();

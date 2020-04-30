@@ -30,4 +30,32 @@ public class ReviewDetailPresenter implements ReviewDetailInterface {
                     }
                 });
     }
+
+    @Override
+    public void enableVote(final String idUser, final String idReview) {
+        Observable<String> observable = service.checkReviewVoted(idUser,idReview);
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        if(s.equals("true")) {
+                            view.enableVote(idUser,idReview);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void rating(float rating, String idUser, String idReview) {
+        Observable<String> observable = service.voteReview(rating,idUser,idReview);
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        if(s.equals("success")) {
+                            view.voteSuccess();
+                        }
+                    }
+                });
+    }
 }

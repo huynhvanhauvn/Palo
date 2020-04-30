@@ -6,59 +6,78 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.HomeFragment.HomeFragment"
     android:id="@+id/home_layout">
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/home_scroll"
 
-        android:scrollbars="none">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/home_nested"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:paddingBottom="?actionBarSize">
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/home_viewPager"
-
+            android:scrollbars="none">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                app:layout_constraintTop_toTopOf="parent"
+                android:paddingBottom="?actionBarSize">
+                <ImageView
+                    android:id="@+id/home_btn_search"
 
-                android:paddingTop="16dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
-            <TextView
-                android:id="@+id/home_txt_recent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
 
-                app:layout_constraintTop_toBottomOf="@+id/home_viewPager"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
 
-                android:layout_margin="8dp"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="@string/home_recent"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/home_recycler_recent"
+                    android:src="@drawable/ic_search"
+                    android:visibility="gone" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/home_viewPager"
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
 
-                app:layout_constraintTop_toBottomOf="@+id/home_txt_recent"/>
-            <ImageView
-                android:id="@+id/home_img_more_recent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_btn_search"
 
-                android:layout_width="200dp"
-                android:layout_height="50dp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp" />
+                <TextView
+                    android:id="@+id/home_txt_recent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-                app:layout_constraintTop_toBottomOf="@id/home_recycler_recent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_viewPager"
 
-                android:visibility="gone"
-                android:layout_margin="8dp"
-                android:src="@drawable/ic_arrow_down"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                    android:layout_margin="8dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="@string/home_recent"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_recycler_recent"
 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toBottomOf="@+id/home_txt_recent"/>
+                <ImageView
+                    android:id="@+id/home_img_more_recent"
+
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+
+                    app:layout_constraintTop_toBottomOf="@id/home_recycler_recent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/ic_arrow_down"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

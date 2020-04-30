@@ -208,7 +208,52 @@
                 android:justificationMode="inter_word"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/review_detail_layout_vote"
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/review_detail_txt_end"
+
+                android:visibility="gone">
+                <RatingBar
+                    android:id="@+id/review_detail_rating_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/review_detail_card_send"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+
+                    android:theme="@style/Rating"
+                    android:numStars="5"
+                    android:layout_margin="16dp"
+                    android:rating="0"
+                    android:stepSize="0.5" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/review_detail_card_send"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/review_detail_rating_star"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+
+                    android:layout_marginBottom="16dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    app:cardBackgroundColor="@color/colorPrimary">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_send"/>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
