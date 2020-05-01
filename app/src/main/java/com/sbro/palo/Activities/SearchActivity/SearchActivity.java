@@ -23,6 +23,7 @@ import com.sbro.palo.Models.Movie;
 import com.sbro.palo.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
@@ -51,7 +52,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        presenter.showBackground();
+        presenter.showBackground(Locale.getDefault().getLanguage());
         tagView.setTagBackgroundColor(Color.TRANSPARENT);
         presenter.getPopularTags();
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {

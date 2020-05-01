@@ -2,6 +2,7 @@ package com.sbro.palo.Services;
 
 import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Background;
+import com.sbro.palo.Models.DateView;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
 import com.sbro.palo.Models.Quote;
@@ -33,7 +34,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("background.php")
-    Observable<Background> background(@Field("position") String position);
+    Observable<Background> background(@Field("position") String position, @Field("language") String language);
 
     @GET("promotion.php")
     Observable<ArrayList<Promotion>> promotion();
@@ -44,13 +45,20 @@ public interface Service {
     @GET("recentmovielist.php")
     Observable<ArrayList<Movie>> recentMovieList();
 
+    @GET("trendmovie.php")
+    Observable<ArrayList<Movie>> trendMovie();
+
     @FormUrlEncoded
     @POST("artistname.php")
     Observable<String> artistName(@Field("id") String id);
 
     @FormUrlEncoded
     @POST("movie.php")
-    Observable<Movie> movie(@Field("id") String id);
+    Observable<Movie> movie(@Field("id") String id, @Field("language") String language);
+
+    @FormUrlEncoded
+    @POST("movieinfo.php")
+    Observable<Movie> movieInfo(@Field("id") String id);
 
     @FormUrlEncoded
     @POST("artist.php")
@@ -109,4 +117,8 @@ public interface Service {
     @FormUrlEncoded
     @POST("updatekeyword.php")
     Observable<String> updateKeyword(@Field("keyword") String keyword);
+
+    @FormUrlEncoded
+    @POST("dateviewmovie.php")
+    Observable<ArrayList<DateView>> getDateView(@Field("idMovie") String idMovie);
 }

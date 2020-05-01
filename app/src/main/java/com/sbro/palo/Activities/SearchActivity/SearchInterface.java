@@ -4,5 +4,5 @@ public interface SearchInterface {
     void getPopularTags();
     void updateKeyword(String keyword);
     void search(String keyword);
-    void showBackground();
+    void showBackground(String language);
 }

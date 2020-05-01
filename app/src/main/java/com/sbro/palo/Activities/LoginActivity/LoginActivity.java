@@ -11,10 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.sbro.palo.Activities.MainActivity;
+import com.sbro.palo.Activities.MainActivity.MainActivity;
 import com.sbro.palo.Activities.SignUp.SignupActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Models.Background;
@@ -23,10 +22,7 @@ import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity implements LoginView{
 
@@ -51,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
         presenter = new LoginPresenter(this);
 
         final Service service = APIService.getService();
-        presenter.updateBackground();
+        presenter.updateBackground(Locale.getDefault().getLanguage());
 
         SharedPreferences sharedPreferences = getApplicationContext()
                 .getSharedPreferences(WelcomeActivity.SHARED_DATA,Context.MODE_PRIVATE);

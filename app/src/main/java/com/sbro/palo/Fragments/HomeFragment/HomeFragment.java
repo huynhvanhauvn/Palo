@@ -41,6 +41,7 @@ import com.sbro.palo.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment implements HomeView {
 
@@ -76,6 +77,7 @@ public class HomeFragment extends Fragment implements HomeView {
         btnSearch = (ImageView) view.findViewById(R.id.home_btn_search);
         scrollView = (NestedScrollView) view.findViewById(R.id.home_nested);
 
+        scrollView.scrollTo(0,0);
         try {
             Field f = swipeRefreshLayout.getClass().getDeclaredField("mCircleView");
             f.setAccessible(true);
@@ -112,7 +114,7 @@ public class HomeFragment extends Fragment implements HomeView {
         });
 
         presenter = new HomePresenter(this);
-        presenter.showBackground();
+        presenter.showBackground(Locale.getDefault().getLanguage());
 
         viewPager.setClipToPadding(false);
         viewPager.setClipChildren(false);

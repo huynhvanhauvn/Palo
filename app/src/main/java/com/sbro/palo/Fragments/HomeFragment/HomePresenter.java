@@ -37,8 +37,8 @@ public class HomePresenter implements HomeInterface {
     }
 
     @Override
-    public void showBackground() {
-        Observable<Background> backgroundObservable = service.background("home");
+    public void showBackground(String language) {
+        Observable<Background> backgroundObservable = service.background("home",language);
         backgroundObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Background>() {
                     @Override

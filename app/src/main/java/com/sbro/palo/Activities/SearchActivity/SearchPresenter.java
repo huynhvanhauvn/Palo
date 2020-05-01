@@ -61,8 +61,8 @@ public class SearchPresenter implements SearchInterface {
     }
 
     @Override
-    public void showBackground() {
-        Observable<Background> observable = service.background("search");
+    public void showBackground(String language) {
+        Observable<Background> observable = service.background("search",language);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Background>() {
                     @Override

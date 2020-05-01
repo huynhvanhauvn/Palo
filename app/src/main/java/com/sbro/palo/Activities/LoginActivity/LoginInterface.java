@@ -8,5 +8,5 @@ import com.sbro.palo.Models.User;
 
 public interface LoginInterface {
     public void infoUser(String user, String pass, Context context, Resources resources);
-    public void updateBackground();
+    public void updateBackground(String language);
 }

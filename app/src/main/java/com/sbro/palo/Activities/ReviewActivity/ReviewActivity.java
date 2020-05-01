@@ -91,7 +91,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         if(id != null) {
-            Observable<Movie> movieObservable = service.movie(id);
+            Observable<Movie> movieObservable = service.movieInfo(id);
             movieObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Movie>() {
                         @Override

@@ -40,6 +40,7 @@ import com.sbro.palo.Services.Service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -100,7 +101,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         if(id != null) {
-            presenter.showMovie(id);
+            Locale.getDefault().getLanguage();
+            presenter.showMovie(id,Locale.getDefault().getLanguage());
         }
     }
 

@@ -42,8 +42,8 @@ public class LoginPresenter implements LoginInterface{
     }
 
     @Override
-    public void updateBackground() {
-        Observable<Background> obBackground = service.background("login");
+    public void updateBackground(String language) {
+        Observable<Background> obBackground = service.background("login",language);
         obBackground.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Background>() {
                     @Override

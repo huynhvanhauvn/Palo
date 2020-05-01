@@ -33,8 +33,8 @@ public class MoviePresenter implements MovieInterface {
     }
 
     @Override
-    public void showMovie(String id) {
-        Observable<Movie> movieObservable = service.movie(id);
+    public void showMovie(String id, String language) {
+        Observable<Movie> movieObservable = service.movie(id, language);
         movieObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Movie>() {
                     @Override

@@ -8,6 +8,6 @@ import java.util.ArrayList;
 
 public interface HomeInterface {
     void showHeader();
-    void showBackground();
+    void showBackground(String language);
     void showRecentMovie();
 }

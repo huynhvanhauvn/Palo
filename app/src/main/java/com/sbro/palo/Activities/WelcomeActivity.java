@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.sbro.palo.Activities.LoginActivity.LoginActivity;
+import com.sbro.palo.Activities.MainActivity.MainActivity;
 import com.sbro.palo.R;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
         boolean isLogged = sharedPref.getBoolean(IS_LOGGED,false);
         if(isLogged) {
-            Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         } else if (!isLogged) {

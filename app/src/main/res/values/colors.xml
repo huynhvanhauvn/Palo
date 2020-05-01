@@ -10,4 +10,8 @@
     <color name="colorText">#F8FFFFFF</color>
     <color name="colorBackgroundDark">#D2000000</color>
     <color name="colorBackgroundLight">#A1000000</color>
+    <color name="colorChart">#30FFA200</color>
+    <color name="colorGold">#FF8000</color>
+    <color name="colorSilver">#6FFF00</color>
+    <color name="colorBronze">#009DFF</color>
 </resources>
