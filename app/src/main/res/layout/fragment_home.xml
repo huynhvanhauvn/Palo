@@ -17,11 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
+            android:background="@color/colorBackgroundLight"
             android:scrollbars="none">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
+                android:descendantFocusability="blocksDescendants"
                 android:paddingBottom="?actionBarSize">
                 <ImageView
                     android:id="@+id/home_btn_search"

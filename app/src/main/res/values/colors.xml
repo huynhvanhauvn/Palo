@@ -14,4 +14,5 @@
     <color name="colorGold">#FF8000</color>
     <color name="colorSilver">#6FFF00</color>
     <color name="colorBronze">#009DFF</color>
+    <color name="colorTabbar">#A0000000</color>
 </resources>

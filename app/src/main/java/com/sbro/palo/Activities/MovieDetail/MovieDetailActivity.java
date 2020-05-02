@@ -210,6 +210,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
                 }
             }
         });
+
         cardSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
