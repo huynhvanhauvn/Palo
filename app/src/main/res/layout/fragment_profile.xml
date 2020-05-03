@@ -23,19 +23,104 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
+                android:layout_marginTop="16dp"
                 app:cardCornerRadius="50dp">
-
+                <ImageView
+                    android:id="@+id/profile_img_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/account"
+                    android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/profile_btn_logout"
-
+            <TextView
+                android:id="@+id/profile_txt_name"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/profile_card_avatar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:layout_marginTop="8dp"
+                android:text="Username"/>
+            <TextView
+                android:id="@+id/profile_txt_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/profile_txt_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                android:textColor="@color/colorPrimary"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:text="0.0"/>
+            <Button
+                android:id="@+id/profile_btn_edit_profile"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_card_avatar"/>
+                app:layout_constraintTop_toBottomOf="@+id/profile_txt_rating"
+
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:text="@string/profile_edt_profile"
+                android:background="@drawable/bg_btn"/>
+            <Button
+                android:id="@+id/profile_btn_change_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_btn_edit_profile"
+
+                android:layout_marginTop="1dp"
+                android:textStyle="bold"
+                android:text="@string/profile_change_pass"
+                android:background="@drawable/bg_btn_reverse"/>
+            <Button
+                android:id="@+id/profile_btn_list_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_btn_change_pass"
+
+                android:layout_marginTop="1dp"
+                android:textStyle="bold"
+                android:text="@string/profile_list_review"
+                android:background="@drawable/bg_btn"/>
+            <Button
+                android:id="@+id/profile_btn_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_btn_list_review"
+
+                android:layout_marginTop="1dp"
+                android:textStyle="bold"
+                android:text="@string/profile_about"
+                android:background="@drawable/bg_btn_reverse"/>
+            <Button
+                android:id="@+id/profile_btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_btn_about"
+
+                android:layout_marginTop="50dp"
+                android:textStyle="bold"
+                android:text="@string/profile_logout"
+                android:background="@drawable/bg_logout"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -33,9 +33,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.sbro.palo.Activities.ReviewDetailActivity.ReviewDetailActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.Review;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
@@ -75,7 +77,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
     private static final int CODE_STORY = 1, CODE_ACT = 2, CODE_PIC = 3, CODE_SOUND = 4, CODE_FEEL = 5, CODE_MSG = 6;
     private String storyPath="", actPath="", picPath="", soundPath="", feelPath="", msgPath="";
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 900;
-    private CardView btnSend;
+    private CardView btnSend, btnUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,26 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
+        String idReview = intent.getStringExtra(ReviewDetailActivity.ID);
+        String title = intent.getStringExtra(ReviewDetailActivity.TITLE);
+        String poster = intent.getStringExtra(ReviewDetailActivity.POSTER);
+        if(idReview != null) {
+            txtTitle.setText(title);
+            Glide.with(getApplicationContext()).load(poster).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    layout.setBackground(resource);
+                }
+            });
+            presenter.getReview(idReview);
+            btnUpdate.setVisibility(View.VISIBLE);
+            btnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(),"update",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         if(id != null) {
             Observable<Movie> movieObservable = service.movieInfo(id);
             movieObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
@@ -249,6 +271,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
             }
         });
         txtTitle.setText(movie.getTitle());
+        btnSend.setVisibility(View.VISIBLE);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,14 +283,6 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                         edtAct != null && !edtAct.getText().toString().equals("") &&
                         edtMsg!= null && !edtMsg.getText().toString().equals("") &&
                         edtEnd != null && !edtEnd.getText().toString().equals("")) {
-                    Log.d("hvhau", idUser + "," + movie.getId() + "," +
-                            edtIntro != null ? edtIntro.getText().toString() : "" + "," +
-                            edtStory.getText().toString() + "," + "" + "," +
-                            edtAct.getText().toString() + "," + "" + "," +
-                            edtPic != null ? edtPic.getText().toString() : "" + "," + "" + "," +
-                            edtSound != null ? edtSound.getText().toString() : "" + "," + "" + "," +
-                            edtFeel != null ? edtFeel.getText().toString() : "" + "," + "" + "," +
-                            edtMsg.getText().toString() + "," + "" + "," + edtEnd.getText().toString());
                     Observable<String> sendObservable = service.review(idUser, movie.getId(),
                             edtIntro != null ? edtIntro.getText().toString() : "",
                             edtStory.getText().toString(), "",
@@ -306,6 +321,26 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                 }
             }
         });
+    }
+
+    @Override
+    public void showReview(Review review) {
+        edtIntro.setText(review.getIntroduction());
+        edtIntro.setSelection(edtIntro.getText().length());
+        edtStory.setText(review.getStory());
+        edtStory.setSelection(edtStory.getText().length());
+        edtAct.setText(review.getActing());
+        edtAct.setSelection(edtAct.getText().length());
+        edtPic.setText(review.getPicture());
+        edtPic.setSelection(edtPic.getText().length());
+        edtSound.setText(review.getSound());
+        edtSound.setSelection(edtSound.getText().length());
+        edtFeel.setText(review.getFeel());
+        edtFeel.setSelection(edtFeel.getText().length());
+        edtMsg.setText(review.getMessage());
+        edtMsg.setSelection(edtMsg.getText().length());
+        edtEnd.setText(review.getEnd());
+        edtEnd.setSelection(edtEnd.getText().length());
     }
 
     @Override
@@ -467,5 +502,6 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         edtMsg = (EditText) findViewById(R.id.review_edt_msg);
         edtEnd = (EditText) findViewById(R.id.review_edt_end);
         btnSend = (CardView) findViewById(R.id.review_card_send);
+        btnUpdate = (CardView) findViewById(R.id.review_card_update);
     }
 }

@@ -4,23 +4,26 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.sbro.palo.Models.Quote;
 import com.sbro.palo.R;
 
 import java.util.ArrayList;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.RecyclerViewHolder> {
+public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.RecyclerViewHolder> {
 
     private Context context;
     private ArrayList<Quote> quotes;
 
-    public ReviewAdapter(Context context, ArrayList<Quote> quotes) {
+    public ReviewItemAdapter(Context context, ArrayList<Quote> quotes) {
         this.context = context;
         this.quotes = quotes;
     }
@@ -28,21 +31,21 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.RecyclerVi
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_review,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_review_row,parent,false);
         return new RecyclerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
         Quote quote = quotes.get(position);
-        holder.txt.setText(quote.getEnd());
-        holder.txtAuthor.setText("-- "+quote.getAuthor()+" --");
+        holder.txtTitle.setText(quote.getTitle());
+        Glide.with(context).load(quote.getPoster()).centerCrop().into(holder.img);
         holder.line.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 if(onItemClickListener != null){
                     //return clicked view and its index
-                    onItemClickListener.OnItemClick(view, position);
+                    onItemClickListener.OnItemClick(v, position);
                 }
             }
         });
@@ -54,13 +57,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.RecyclerVi
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        private TextView txt, txtAuthor;
+        private RoundedImageView img;
+        private TextView txtTitle;
         private ConstraintLayout line;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            txt = (TextView) itemView.findViewById(R.id.item_txt_review);
-            txtAuthor = (TextView) itemView.findViewById(R.id.item_txt_author);
-            line = (ConstraintLayout) itemView.findViewById(R.id.item_review_line);
+            img = (RoundedImageView) itemView.findViewById(R.id.ireview_img_poster);
+            txtTitle = (TextView) itemView.findViewById(R.id.ireview_txt_title);
+            line = (ConstraintLayout) itemView.findViewById(R.id.ireview_line);
         }
     }
 

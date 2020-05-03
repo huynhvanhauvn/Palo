@@ -34,8 +34,21 @@
         android:textSize="17dp"
         android:padding="8dp"
         android:maxLines="5"
-        android:layout_marginVertical="15dp"
         android:text=""/>
+    <TextView
+        android:id="@+id/item_txt_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/item_txt_review"
+        app:layout_constraintRight_toLeftOf="@+id/item_review_quote_close"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:lines="1"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="italic"
+        android:textColor="@color/colorText"/>
     <ImageView
         android:id="@+id/item_review_quote_close"
 

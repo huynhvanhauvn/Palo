@@ -31,25 +31,15 @@ public class User {
     @SerializedName("avatar")
     @Expose
     private String avatar;
+    @SerializedName("review")
+    @Expose
+    private String review;
+    @SerializedName("point")
+    @Expose
+    private String point;
     @SerializedName("admin")
     @Expose
     private String admin;
-
-    @Inject
-    public User() {
-    }
-
-    public User(String id, String name, String fullName, String password, String gender, String birthday, String dateCreate, String avatar, String admin) {
-        this.id = id;
-        this.name = name;
-        this.fullName = fullName;
-        this.password = password;
-        this.gender = gender;
-        this.birthday = birthday;
-        this.dateCreate = dateCreate;
-        this.avatar = avatar;
-        this.admin = admin;
-    }
 
     public String getId() {
         return id;
@@ -113,6 +103,22 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
     }
 
     public String getAdmin() {

@@ -16,10 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -43,6 +46,8 @@ import com.sbro.palo.Services.Service;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -133,7 +138,7 @@ public class TrendFragment extends Fragment implements TrendView {
         lineChart.getAxisLeft().setEnabled(false);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setEnabled(false);
-        lineChart.animateXY(3000,3000);
+        lineChart.animateXY(5000,7000);
         lineChart.setTouchEnabled(false);
     }
 

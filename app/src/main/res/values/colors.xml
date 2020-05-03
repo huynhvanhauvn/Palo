@@ -15,4 +15,5 @@
     <color name="colorSilver">#6FFF00</color>
     <color name="colorBronze">#009DFF</color>
     <color name="colorTabbar">#A0000000</color>
+    <color name="colorPrimaryFade">#A0FFA200</color>
 </resources>

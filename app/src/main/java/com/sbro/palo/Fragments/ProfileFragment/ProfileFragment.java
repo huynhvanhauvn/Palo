@@ -15,23 +15,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.LoginActivity.LoginActivity;
+import com.sbro.palo.Activities.MyReviewActivity.MyReviewActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Models.Background;
+import com.sbro.palo.Models.User;
 import com.sbro.palo.R;
+
+import java.text.DecimalFormat;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment implements ProfileView {
 
-    private Button btnLogout;
+    private Button btnLogout, btnChangeProfile, btnChangePass, btnViewReview, btnAbout;
     private ProfilePresenter presenter;
     private ConstraintLayout layout;
+    private TextView txtName, txtPoint;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -50,18 +56,53 @@ public class ProfileFragment extends Fragment implements ProfileView {
         super.onViewCreated(view, savedInstanceState);
         btnLogout = (Button) view.findViewById(R.id.profile_btn_logout);
         layout = (ConstraintLayout) view.findViewById(R.id.profile_layout);
+        btnChangeProfile = (Button) view.findViewById(R.id.profile_btn_edit_profile);
+        btnChangePass = (Button) view.findViewById(R.id.profile_btn_change_pass);
+        btnViewReview = (Button) view.findViewById(R.id.profile_btn_list_review);
+        btnAbout = (Button) view.findViewById(R.id.profile_btn_about);
+        txtName = (TextView) view.findViewById(R.id.profile_txt_name);
+        txtPoint = (TextView) view.findViewById(R.id.profile_txt_rating);
 
         presenter = new ProfilePresenter(this);
         presenter.getBackground();
+        SharedPreferences preferences = getContext().getSharedPreferences(WelcomeActivity.SHARED_DATA,
+                Context.MODE_PRIVATE);
+        String id = preferences.getString(WelcomeActivity.USER_ID,"");
+        if(!id.equals("")) {
+            presenter.getProfile(id);
+        }
 
+        btnChangeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        btnViewReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MyReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences sharedPreferences = getContext()
                         .getSharedPreferences(WelcomeActivity.SHARED_DATA, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString(WelcomeActivity.USER_NAME,"");
-//                editor.putString(WelcomeActivity.PASSWORD,"");
                 editor.putBoolean(WelcomeActivity.IS_LOGGED,false);
                 editor.commit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -79,5 +120,13 @@ public class ProfileFragment extends Fragment implements ProfileView {
                 layout.setBackground(resource);
             }
         });
+    }
+
+    @Override
+    public void showProfile(User user) {
+        txtName.setText(user.getName());
+        float point = Float.parseFloat(user.getPoint());
+        DecimalFormat format = new DecimalFormat("0.0");
+        txtPoint.setText(format.format(point));
     }
 }

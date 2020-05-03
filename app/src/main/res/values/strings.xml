@@ -27,4 +27,9 @@
     <string name="review_message">Message</string>
     <string name="review_conclude">Conclude</string>
     <string name="review_send">Send Review</string>
+    <string name="profile_logout">Logout</string>
+    <string name="profile_edt_profile">Change Profile</string>
+    <string name="profile_change_pass">Change Password</string>
+    <string name="profile_list_review">View My Review</string>
+    <string name="profile_about">About</string>
 </resources>

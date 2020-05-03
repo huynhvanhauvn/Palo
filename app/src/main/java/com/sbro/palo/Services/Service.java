@@ -121,4 +121,12 @@ public interface Service {
     @FormUrlEncoded
     @POST("dateviewmovie.php")
     Observable<ArrayList<DateView>> getDateView(@Field("idMovie") String idMovie);
+
+    @FormUrlEncoded
+    @POST("profile.php")
+    Observable<User> getProfile(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("myreview.php")
+    Observable<ArrayList<Quote>> getMyReview(@Field("idUser") String idUser);
 }
