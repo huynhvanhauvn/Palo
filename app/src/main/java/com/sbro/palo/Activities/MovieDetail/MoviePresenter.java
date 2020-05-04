@@ -51,18 +51,20 @@ public class MoviePresenter implements MovieInterface {
         final ArrayList<Artist> artists = new ArrayList<>();
         final ArtistAdapter adapter = new ArtistAdapter(context,artists);
         for(String id : ids) {
-            Observable<Artist> artistObservable = service.artist(id);
-            artistObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Artist>() {
-                        @Override
-                        public void call(Artist artist) {
-                            if(artist != null) {
-                                artists.add(artist);
-                                adapter.notifyDataSetChanged();
-                                movieView.getArtist(adapter,recycler,textView);
+            if(!id.equals("")) {
+                Observable<Artist> artistObservable = service.artist(id);
+                artistObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<Artist>() {
+                            @Override
+                            public void call(Artist artist) {
+                                if(artist != null) {
+                                    artists.add(artist);
+                                    adapter.notifyDataSetChanged();
+                                    movieView.getArtist(adapter,recycler,textView);
+                                }
                             }
-                        }
-                    });
+                        });
+            }
         }
     }
 

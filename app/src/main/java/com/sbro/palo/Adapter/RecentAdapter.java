@@ -53,19 +53,21 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
             Service service = APIService.getService();
             final String[] directorNames = {""};
             for(String string : strings) {
-                Observable<String> nameObservable = service.artistName(string);
-                nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<String>() {
-                            @Override
-                            public void call(String s) {
-                                if(directorNames[0].equals("")) {
-                                    directorNames[0] = s;
-                                } else {
-                                    directorNames[0] = directorNames[0] + ", " + s;
+                if(!string.equals("")) {
+                    Observable<String> nameObservable = service.artistName(string);
+                    nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<String>() {
+                                @Override
+                                public void call(String s) {
+                                    if(directorNames[0].equals("")) {
+                                        directorNames[0] = s;
+                                    } else {
+                                        directorNames[0] = directorNames[0] + ", " + s;
+                                    }
+                                    holder.txtDirector.setText(directorNames[0]);
                                 }
-                                holder.txtDirector.setText(directorNames[0]);
-                            }
-                        });
+                            });
+                }
             }
         }
         holder.line.setOnClickListener(new View.OnClickListener() {
