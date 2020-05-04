@@ -94,10 +94,21 @@ public interface Service {
                               @Field("soundImage") String soundImage, @Field("feel") String feel,
                               @Field("feelImage") String feelImg, @Field("message") String msg,
                               @Field("messageImage") String msgImg, @Field("end") String end);
+    @FormUrlEncoded
+    @POST("reviewupdate.php")
+    Observable<String> updateReview(@Field("id") String id,
+                              @Field("introduction") String intro, @Field("story") String story,
+                              @Field("acting") String act, @Field("picture") String pic,
+                              @Field("sound") String sound, @Field("feel") String feel,
+                              @Field("message") String msg, @Field("end") String end);
 
     @Multipart
     @POST("uploadImage.php")
     Observable<String> uploadImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type);
+
+    @Multipart
+    @POST("updateImage.php")
+    Observable<String> updateImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type);
 
     @FormUrlEncoded
     @POST("quote.php")
@@ -129,4 +140,8 @@ public interface Service {
     @FormUrlEncoded
     @POST("myreview.php")
     Observable<ArrayList<Quote>> getMyReview(@Field("idUser") String idUser);
+
+    @FormUrlEncoded
+    @POST("changepassword.php")
+    Observable<String> changePassword(@Field("id") String id, @Field("password") String password);
 }

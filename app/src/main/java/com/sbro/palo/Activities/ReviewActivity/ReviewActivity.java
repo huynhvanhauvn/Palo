@@ -1,15 +1,6 @@
 package com.sbro.palo.Activities.ReviewActivity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,64 +11,52 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.ReviewDetailActivity.ReviewDetailActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
-import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Review;
 import com.sbro.palo.R;
-import com.sbro.palo.Services.APIService;
-import com.sbro.palo.Services.Service;
-import com.sbro.palo.Utils.ImageUtil;
-import com.sbro.palo.Utils.ReadPathUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public class ReviewActivity extends AppCompatActivity implements ReviewView {
 
     private ConstraintLayout layout, layoutIntro, layoutPic, layoutSound, layoutFeel;
     private ReviewPresenter presenter;
-    private Service service = APIService.getService();
     private TextView txtTitle, txtIntro, txtStory, txtAct, txtPic, txtSound, txtFeel, txtMsg, txtEnd;
     private ImageButton btnIntro, btnPic, btnSound, btnFeel,
             btnImgStory, btnImgAct, btnImgPic, btnImgSound, btnImgFeel,btnImgMsg;
     private EditText edtIntro, edtStory, edtAct, edtPic, edtSound, edtFeel, edtMsg, edtEnd;
     private static final int CODE_STORY = 1, CODE_ACT = 2, CODE_PIC = 3, CODE_SOUND = 4, CODE_FEEL = 5, CODE_MSG = 6;
     private String storyPath="", actPath="", picPath="", soundPath="", feelPath="", msgPath="";
+    private String storyFile="",actFile="",picFile="",soundFile="",feelFile="",msgFile="";
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 900;
     private CardView btnSend, btnUpdate;
+    private int numUploadImg = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +71,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
-        String idReview = intent.getStringExtra(ReviewDetailActivity.ID);
+        final String idReview = intent.getStringExtra(ReviewDetailActivity.ID);
         String title = intent.getStringExtra(ReviewDetailActivity.TITLE);
         String poster = intent.getStringExtra(ReviewDetailActivity.POSTER);
         if(idReview != null) {
@@ -108,21 +87,25 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
             btnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(),"update",Toast.LENGTH_SHORT).show();
+                    if(!idReview.equals("") &&
+                            edtStory != null && !edtStory.getText().toString().equals("") &&
+                            edtAct != null && !edtAct.getText().toString().equals("") &&
+                            edtMsg!= null && !edtMsg.getText().toString().equals("") &&
+                            edtEnd != null && !edtEnd.getText().toString().equals("")) {
+                        presenter.updateReview(idReview,
+                                edtIntro != null ? edtIntro.getText().toString() : "",
+                                edtStory.getText().toString(),
+                                edtAct.getText().toString(),
+                                edtPic != null ? edtPic.getText().toString() : "",
+                                edtSound != null ? edtSound.getText().toString() : "",
+                                edtFeel != null ? edtFeel.getText().toString() : "",
+                                edtMsg.getText().toString(), edtEnd.getText().toString());
+                    }
                 }
             });
         }
         if(id != null) {
-            Observable<Movie> movieObservable = service.movieInfo(id);
-            movieObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Movie>() {
-                        @Override
-                        public void call(Movie movie) {
-                            if(movie != null) {
-                                presenter.showMovieInfo(movie);
-                            }
-                        }
-                    });
+            presenter.showMovieInfo(id);
         }
 
         toggleLayout();
@@ -146,7 +129,6 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         btnIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"click1",Toast.LENGTH_SHORT).show();
                 btnIntro.setVisibility(View.GONE);
                 layoutIntro.setVisibility(View.GONE);
             }
@@ -283,41 +265,14 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                         edtAct != null && !edtAct.getText().toString().equals("") &&
                         edtMsg!= null && !edtMsg.getText().toString().equals("") &&
                         edtEnd != null && !edtEnd.getText().toString().equals("")) {
-                    Observable<String> sendObservable = service.review(idUser, movie.getId(),
+                    presenter.sendReview(idUser, movie.getId(),
                             edtIntro != null ? edtIntro.getText().toString() : "",
-                            edtStory.getText().toString(), "",
-                            edtAct.getText().toString(), "",
-                            edtPic != null ? edtPic.getText().toString() : "", "",
-                            edtSound != null ? edtSound.getText().toString() : "", "",
-                            edtFeel != null ? edtFeel.getText().toString() : "", "",
-                            edtMsg.getText().toString(), "", edtEnd.getText().toString());
-                    sendObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<String>() {
-                                @Override
-                                public void call(String s) {
-                                    Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-                                    if(s != null && !s.equals("")) {
-                                        if(!storyPath.equals("")) {
-                                            pushImage(storyPath, s, "storyImage");
-                                        }
-                                        if(!actPath.equals("")) {
-                                            pushImage(actPath, s, "actingImage");
-                                        }
-                                        if(!picPath.equals("")) {
-                                            pushImage(picPath, s, "pictureImage");
-                                        }
-                                        if(!soundPath.equals("")) {
-                                            pushImage(soundPath, s, "soundImage");
-                                        }
-                                        if(!feelPath.equals("")) {
-                                            pushImage(feelPath, s, "feelImage");
-                                        }
-                                        if(!msgPath.equals("")) {
-                                            pushImage(msgPath, s, "messageImage");
-                                        }
-                                    }
-                                }
-                            });
+                            edtStory.getText().toString(),
+                            edtAct.getText().toString(),
+                            edtPic != null ? edtPic.getText().toString() : "",
+                            edtSound != null ? edtSound.getText().toString() : "",
+                            edtFeel != null ? edtFeel.getText().toString() : "",
+                            edtMsg.getText().toString(), edtEnd.getText().toString());
                 }
             }
         });
@@ -329,18 +284,132 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         edtIntro.setSelection(edtIntro.getText().length());
         edtStory.setText(review.getStory());
         edtStory.setSelection(edtStory.getText().length());
+        if(review.getStoryImage()!=null && !review.getStoryImage().equals("")){
+            Glide.with(getApplicationContext()).load(review.getStoryImage()).centerCrop().into(btnImgStory);
+            storyFile = review.getStoryImage().replace("http://huynhvanhaua.000webhostapp.com/movieimage/","");
+        }
         edtAct.setText(review.getActing());
         edtAct.setSelection(edtAct.getText().length());
+        if(review.getActingImage()!=null && !review.getActingImage().equals("")){
+            Glide.with(getApplicationContext()).load(review.getActingImage()).centerCrop().into(btnImgAct);
+            actFile = review.getActingImage().replace("http://huynhvanhaua.000webhostapp.com/movieimage/","");
+        }
         edtPic.setText(review.getPicture());
         edtPic.setSelection(edtPic.getText().length());
+        if(review.getPictureImage()!=null && !review.getPictureImage().equals("")){
+            Glide.with(getApplicationContext()).load(review.getPictureImage()).centerCrop().into(btnImgPic);
+            picFile = review.getPictureImage().replace("http://huynhvanhaua.000webhostapp.com/movieimage/","");
+        }
         edtSound.setText(review.getSound());
         edtSound.setSelection(edtSound.getText().length());
+        if(review.getSoundImage()!=null && !review.getSoundImage().equals("")){
+            Glide.with(getApplicationContext()).load(review.getSoundImage()).centerCrop().into(btnImgSound);
+            soundFile = review.getSoundImage().replace("http://huynhvanhaua.000webhostapp.com/movieimage/","");
+        }
         edtFeel.setText(review.getFeel());
         edtFeel.setSelection(edtFeel.getText().length());
+        if(review.getFeelImage()!=null && !review.getFeelImage().equals("")){
+            Glide.with(getApplicationContext()).load(review.getFeelImage()).centerCrop().into(btnImgFeel);
+            feelFile = review.getFeelImage().replace("http://huynhvanhaua.000webhostapp.com/movieimage/","");
+        }
         edtMsg.setText(review.getMessage());
         edtMsg.setSelection(edtMsg.getText().length());
+        if(review.getMessageImage()!=null && !review.getMessageImage().equals("")){
+            Glide.with(getApplicationContext()).load(review.getMessageImage()).centerCrop().into(btnImgMsg);
+            msgFile = review.getMessageImage().replace("http://huynhvanhaua.000webhostapp.com/movieimage/","");
+        }
         edtEnd.setText(review.getEnd());
         edtEnd.setSelection(edtEnd.getText().length());
+    }
+
+    @Override
+    public void updateReviewTextSuccess(String idReview) {
+        numUploadImg = 0;
+        if(!storyPath.equals("")) {
+            numUploadImg++;
+            if(storyPath.equals("")) {
+                pushImage(storyPath, idReview, "storyImage", false);
+            } else {
+                pushImage(storyPath, idReview, "storyImage", true);
+            }
+        }
+        if(!actPath.equals("")) {
+            numUploadImg++;
+            if(actFile.equals("")){
+                pushImage(actPath, idReview, "actingImage", false);
+            } else {
+                pushImage(actPath, idReview, "storyImage", true);
+            }
+        }
+        if(!picPath.equals("")) {
+            numUploadImg++;
+            if(actFile.equals("")) {
+                pushImage(picPath, idReview, "pictureImage", false);
+            } else {
+                pushImage(picPath, idReview, "pictureImage", true);
+            }
+        }
+        if(!soundPath.equals("")) {
+            numUploadImg++;
+            if(soundFile.equals("")) {
+                pushImage(soundPath, idReview, "soundImage", false);
+            } else {
+                pushImage(soundPath, idReview, "soundImage", true);
+            }
+        }
+        if(!feelPath.equals("")) {
+            numUploadImg++;
+            if(feelFile.equals("")) {
+                pushImage(feelPath, idReview, "feelImage", false);
+            } else {
+                pushImage(feelPath, idReview, "feelImage", true);
+            }
+        }
+        if(!msgPath.equals("")) {
+            numUploadImg++;
+            if(msgFile.equals("")) {
+                pushImage(msgPath, idReview, "messageImage", false);
+            } else {
+                pushImage(msgPath, idReview, "messageImage", true);
+            }
+        }
+    }
+
+    @Override
+    public void sendReviewSuccess(String idReview) {
+        numUploadImg = 0;
+        if(!storyPath.equals("")) {
+            numUploadImg++;
+            pushImage(storyPath, idReview, "storyImage", false);
+        }
+        if(!actPath.equals("")) {
+            numUploadImg++;
+            pushImage(actPath, idReview, "actingImage", false);
+        }
+        if(!picPath.equals("")) {
+            numUploadImg++;
+            pushImage(picPath, idReview, "pictureImage", false);
+        }
+        if(!soundPath.equals("")) {
+            numUploadImg++;
+            pushImage(soundPath, idReview, "soundImage", false);
+        }
+        if(!feelPath.equals("")) {
+            numUploadImg++;
+            pushImage(feelPath, idReview, "feelImage", false);
+        }
+        if(!msgPath.equals("")) {
+            numUploadImg++;
+            pushImage(msgPath, idReview, "messageImage", false);
+        }
+    }
+
+    @Override
+    public void uploadImageSuccess() {
+        numUploadImg--;
+        if(numUploadImg<=0) {
+            finish();
+        }
     }
 
     @Override
@@ -426,19 +495,16 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         }
     }
 
-    public void pushImage(String path, String id, String type) {
+    public void pushImage(String path, String id, String type, boolean isUpdate) {
         File file = new File(path);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
-        Observable<String> observable = service.uploadImage(body, id, type);
-        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-
-                    }
-                });
+        if(isUpdate) {
+            presenter.updateImage(body,id,type);
+        } else {
+            presenter.uploadImage(body,id,type);
+        }
     }
 
     @Override

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.sbro.palo.Activities.ChangePassActivity.ChangePassActivity;
 import com.sbro.palo.Activities.LoginActivity.LoginActivity;
 import com.sbro.palo.Activities.MyReviewActivity.MyReviewActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
@@ -81,7 +82,8 @@ public class ProfileFragment extends Fragment implements ProfileView {
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getContext(), ChangePassActivity.class);
+                startActivity(intent);
             }
         });
         btnViewReview.setOnClickListener(new View.OnClickListener() {

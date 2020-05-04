@@ -4,11 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.MyReviewActivity.MyReviewActivity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myreview_recycler"
+    tools:context=".Activities.MyReviewActivity.MyReviewActivity"
+    android:id="@+id/myreview_layout">
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackgroundLight">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/myreview_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-        android:padding="8dp"/>
+                android:nestedScrollingEnabled="false"
+                android:padding="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

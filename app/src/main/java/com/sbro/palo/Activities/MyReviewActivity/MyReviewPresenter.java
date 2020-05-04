@@ -1,10 +1,12 @@
 package com.sbro.palo.Activities.MyReviewActivity;
 
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Quote;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,6 +30,20 @@ public class MyReviewPresenter implements MyReviewInterface {
                     public void call(ArrayList<Quote> quotes) {
                         if(quotes != null) {
                             view.showReviewList(quotes);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getBackground() {
+        Observable<Background> observable = service.background("myreview", Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Background>() {
+                    @Override
+                    public void call(Background background) {
+                        if(background != null) {
+                            view.showBackground(background);
                         }
                     }
                 });
