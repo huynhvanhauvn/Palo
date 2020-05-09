@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,32 +13,41 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.sbro.palo.Models.Artist;
+import com.sbro.palo.Models.Movie;
 import com.sbro.palo.R;
+import com.sbro.palo.Services.APIService;
+import com.sbro.palo.Services.Service;
 
 import java.util.ArrayList;
 
-public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.RecyclerViewHolder> {
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.RecylerViewHolder> {
 
     private Context context;
     private ArrayList<Artist> artists;
 
-    public ArtistAdapter(Context context, ArrayList<Artist> artists) {
+    public ArtistListAdapter(Context context, ArrayList<Artist> artists) {
         this.context = context;
         this.artists = artists;
     }
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_artist,parent,false);
-        return new RecyclerViewHolder(view);
+    public RecylerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_recent_movie, parent,false);
+        return new RecylerViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
-        Artist artist = artists.get(position);
+    public void onBindViewHolder(@NonNull final RecylerViewHolder holder, final int position) {
+        final Artist artist = artists.get(position);
         Glide.with(context).load(artist.getImage()).centerCrop().into(holder.imgAvatar);
         holder.txtName.setText(artist.getName());
+        holder.txtNation.setText(artist.getNation());
         holder.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,31 +64,29 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.RecyclerVi
         return artists.size();
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    public class RecylerViewHolder extends RecyclerView.ViewHolder{
+
         private RoundedImageView imgAvatar;
-        private TextView txtName;
+        private TextView txtName, txtNation;
         private ConstraintLayout line;
 
-        public RecyclerViewHolder(@NonNull View itemView) {
+        public RecylerViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgAvatar = (RoundedImageView) itemView.findViewById(R.id.artist_avatar);
-            txtName = (TextView) itemView.findViewById(R.id.artist_txt_name);
-            line = (ConstraintLayout) itemView.findViewById(R.id.iartist_line);
+            imgAvatar = (RoundedImageView) itemView.findViewById(R.id.home_img_poster);
+            txtName = (TextView) itemView.findViewById(R.id.home_txt_title);
+            txtNation = (TextView) itemView.findViewById(R.id.home_txt_director);
+            line = (ConstraintLayout) itemView.findViewById(R.id.recent_line);
         }
-    }
-
-    public ArrayList<Artist> getArtists() {
-        return artists;
     }
 
     public interface OnItemClickListener{
         public void OnItemClick(View view, int position);
     }
 
-    private RecentAdapter.OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener;
 
     //method to set item click in adapter
-    public void setOnItemClickListener(RecentAdapter.OnItemClickListener onItemClickListener){
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }
 }

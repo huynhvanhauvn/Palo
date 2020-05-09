@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity"></activity>
+        <activity android:name=".Activities.ArtistActivity.ArtistActivity"></activity>
+        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" />
         <activity android:name=".Activities.MyReviewActivity.MyReviewActivity" />
         <activity android:name=".Activities.SearchActivity.SearchActivity" />
         <activity android:name=".Activities.MovieList.MovieListActivity" />

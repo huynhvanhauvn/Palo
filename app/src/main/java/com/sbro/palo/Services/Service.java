@@ -65,6 +65,10 @@ public interface Service {
     Observable<Artist> artist(@Field("id") String id);
 
     @FormUrlEncoded
+    @POST("artistdetail.php")
+    Observable<Artist> artistDetail(@Field("id") String id, @Field("language") String language);
+
+    @FormUrlEncoded
     @POST("vote.php")
     Observable<String> vote(@Field("rating") float rating, @Field("idUser") String idUser, @Field("idMovie") String idMovie);
 
@@ -126,6 +130,10 @@ public interface Service {
     Observable<ArrayList<Movie>> searchResult(@Field("keyword") String keyword);
 
     @FormUrlEncoded
+    @POST("searchartist.php")
+    Observable<ArrayList<Artist>> searchArtist(@Field("keyword") String keyword);
+
+    @FormUrlEncoded
     @POST("updatekeyword.php")
     Observable<String> updateKeyword(@Field("keyword") String keyword);
 
@@ -144,4 +152,16 @@ public interface Service {
     @FormUrlEncoded
     @POST("changepassword.php")
     Observable<String> changePassword(@Field("id") String id, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("directormovie.php")
+    Observable<ArrayList<Movie>> directorMovie(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("writermovie.php")
+    Observable<ArrayList<Movie>> writerMovie(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("castmovie.php")
+    Observable<ArrayList<Movie>> castMovie(@Field("id") String id);
 }

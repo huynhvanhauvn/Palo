@@ -1,5 +1,6 @@
 package com.sbro.palo.Activities.SearchActivity;
 
+import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Services.APIService;
@@ -55,6 +56,20 @@ public class SearchPresenter implements SearchInterface {
                     public void call(ArrayList<Movie> movies) {
                         if(movies != null) {
                             view.showResult(movies);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void searchArtist(String keyword) {
+        Observable<ArrayList<Artist>> observable = service.searchArtist(keyword);
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ArrayList<Artist>>() {
+                    @Override
+                    public void call(ArrayList<Artist> artists) {
+                        if(artists != null) {
+                            view.showArtists(artists);
                         }
                     }
                 });

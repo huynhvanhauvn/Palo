@@ -40,4 +40,9 @@
     <string name="pass_err_wrong">Wrong Password</string>
     <string name="pass_err_different">Password must be different.</string>
     <string name="pass_err_not_match">Not matching</string>
+    <string name="artist_director">Directed</string>
+    <string name="artist_write">Wrote</string>
+    <string name="artist_act">Played</string>
+    <string name="search_movie">Movies</string>
+    <string name="search_artist">Artists</string>
 </resources>

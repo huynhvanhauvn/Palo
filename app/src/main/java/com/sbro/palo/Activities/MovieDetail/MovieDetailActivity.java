@@ -26,10 +26,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+import com.sbro.palo.Activities.ArtistActivity.ArtistActivity;
 import com.sbro.palo.Activities.ReviewActivity.ReviewActivity;
 import com.sbro.palo.Activities.ReviewDetailActivity.ReviewDetailActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Adapter.ArtistAdapter;
+import com.sbro.palo.Adapter.RecentAdapter;
 import com.sbro.palo.Adapter.ReviewAdapter;
 import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Movie;
@@ -227,12 +229,20 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     }
 
     @Override
-    public void getArtist(ArtistAdapter adapter, RecyclerView recycler, TextView textView) {
+    public void getArtist(final ArtistAdapter adapter, RecyclerView recycler, TextView textView) {
         textView.setVisibility(View.VISIBLE);
         recycler.setNestedScrollingEnabled(false);
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Intent intent = new Intent(MovieDetailActivity.this, ArtistActivity.class);
+                intent.putExtra(ArtistActivity.ID,adapter.getArtists().get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -274,6 +284,4 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
             presenter.getArtist(getApplicationContext(), strings, recycler, textView);
         }
     }
-
-
 }

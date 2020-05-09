@@ -23,6 +23,9 @@ public class Artist {
     @SerializedName("nation")
     @Expose
     private String nation;
+    @SerializedName("view")
+    @Expose
+    private String view;
     @SerializedName("image")
     @Expose
     private String image;
@@ -73,6 +76,14 @@ public class Artist {
 
     public void setNation(String nation) {
         this.nation = nation;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
     }
 
     public String getImage() {
