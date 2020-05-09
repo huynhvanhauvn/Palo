@@ -48,18 +48,7 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
                 if(edtUsername != null && !edtUsername.getText().toString().equals("")
                         && edtPassword != null && !edtPassword.getText().toString().equals("")) {
                     Service service = APIService.getService();
-                    Observable<String> observable = service.signup(edtUsername.getText().toString(),
-                            edtPassword.getText().toString());
-                    observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<String>() {
-                                @Override
-                                public void call(String s) {
-                                    Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-                                    if(s.equals("success")) {
-                                        presenter.signup(edtUsername.getText().toString(), edtPassword.getText().toString());
-                                    }
-                                }
-                            });
+                    presenter.signup(edtUsername.getText().toString(), edtPassword.getText().toString());
                 }
             }
         });

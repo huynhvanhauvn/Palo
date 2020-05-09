@@ -50,7 +50,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("artistname.php")
-    Observable<String> artistName(@Field("id") String id);
+    Observable<ArrayList<String>> artistName(@Field("id") String id, @Field("role") int role);
 
     @FormUrlEncoded
     @POST("movie.php")
@@ -62,7 +62,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("artist.php")
-    Observable<Artist> artist(@Field("id") String id);
+    Observable<ArrayList<Artist>> artist(@Field("id") String id, @Field("role") int role);
 
     @FormUrlEncoded
     @POST("artistdetail.php")
@@ -154,14 +154,6 @@ public interface Service {
     Observable<String> changePassword(@Field("id") String id, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("directormovie.php")
-    Observable<ArrayList<Movie>> directorMovie(@Field("id") String id);
-
-    @FormUrlEncoded
-    @POST("writermovie.php")
-    Observable<ArrayList<Movie>> writerMovie(@Field("id") String id);
-
-    @FormUrlEncoded
-    @POST("castmovie.php")
-    Observable<ArrayList<Movie>> castMovie(@Field("id") String id);
+    @POST("artistlistmovie.php")
+    Observable<ArrayList<Movie>> artistmovie(@Field("id") String id, @Field("role") int role);
 }

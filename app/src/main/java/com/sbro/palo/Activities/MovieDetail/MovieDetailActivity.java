@@ -180,13 +180,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         });
         final DecimalFormat format = new DecimalFormat("0.0");
         txtRating.setText(format.format(Float.parseFloat(movie.getRating())));
-        if(movie.getDirector() != null && !movie.getDescription().equals("")) {
+        if(movie.getDescription() != null && !movie.getDescription().equals("")) {
             txtLabelDescription.setVisibility(View.VISIBLE);
             txtDescription.setText(movie.getDescription());
         }
-        showArtist(movie.getDirector(),recyclerDirector, txtDirector);
-        showArtist(movie.getWriter(),recyclerWriter, txtWriter);
-        showArtist(movie.getCast(),recyclerCast, txtCast);
+        showArtist(movie.getId(),1);
+        showArtist(movie.getId(),2);
+        showArtist(movie.getId(),3);
         if(movie.getDate() != null && !movie.getDate().equals("")) {
             txtDateLabel.setVisibility(View.VISIBLE);
             txtDate.setVisibility(View.VISIBLE);
@@ -229,11 +229,26 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     }
 
     @Override
-    public void getArtist(final ArtistAdapter adapter, RecyclerView recycler, TextView textView) {
+    public void getArtist(ArrayList<Artist> artists, int role) {
+        switch (role) {
+            case 1:
+                setArtist(artists,recyclerDirector,txtDirector);
+                break;
+            case 2:
+                setArtist(artists,recyclerWriter,txtWriter);
+                break;
+            case 3:
+                setArtist(artists,recyclerCast,txtCast);
+                break;
+        }
+    }
+
+    private void setArtist(ArrayList<Artist> artists, RecyclerView recycler, TextView textView) {
         textView.setVisibility(View.VISIBLE);
         recycler.setNestedScrollingEnabled(false);
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recycler.setLayoutManager(layoutManager);
+        final ArtistAdapter adapter = new ArtistAdapter(getApplicationContext(),artists);
         recycler.setAdapter(adapter);
         adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
             @Override
@@ -278,10 +293,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         }
     }
 
-    private void showArtist(String ids, RecyclerView recycler, TextView textView) {
-        if(!ids.equals("")) {
-            String[] strings = ids.split("/");
-            presenter.getArtist(getApplicationContext(), strings, recycler, textView);
+    private void showArtist(String idMovie, int role) {
+        if(!idMovie.equals("")) {
+            presenter.getArtist(idMovie,role);
         }
     }
 }

@@ -30,6 +30,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
 
     private Context context;
     private ArrayList<Movie> movies;
+    private Service service = APIService.getService();
 
     public RecentAdapter(Context context, ArrayList<Movie> movies) {
         this.context = context;
@@ -48,28 +49,22 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
         final Movie movie = movies.get(position);
         Glide.with(context).load(movie.getPoster()).centerCrop().into(holder.imgPoster);
         holder.txtTitle.setText(movie.getTitle());
-        if(!movie.getDirector().equals("")){
-            String[] strings = movie.getDirector().split("/");
-            Service service = APIService.getService();
-            final String[] directorNames = {""};
-            for(String string : strings) {
-                if(!string.equals("")) {
-                    Observable<String> nameObservable = service.artistName(string);
-                    nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<String>() {
-                                @Override
-                                public void call(String s) {
-                                    if(directorNames[0].equals("")) {
-                                        directorNames[0] = s;
-                                    } else {
-                                        directorNames[0] = directorNames[0] + ", " + s;
-                                    }
-                                    holder.txtDirector.setText(directorNames[0]);
+        Observable<ArrayList<String>> nameObservable = service.artistName(movie.getId(), 1);
+        nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ArrayList<String>>() {
+                    @Override
+                    public void call(ArrayList<String> s) {
+                        if(s!=null && s.size()>0) {
+                            String names = s.get(0);
+                            if(s.size()>1) {
+                                for (int i=1; i<s.size(); i++) {
+                                    names = names + ", " + s.get(i);
                                 }
-                            });
-                }
-            }
-        }
+                            }
+                            holder.txtDirector.setText(names);
+                        }
+                    }
+                });
         holder.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

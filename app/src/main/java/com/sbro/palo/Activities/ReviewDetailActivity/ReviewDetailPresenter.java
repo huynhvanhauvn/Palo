@@ -5,6 +5,7 @@ import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -21,9 +22,19 @@ public class ReviewDetailPresenter implements ReviewDetailInterface {
     public void showReview(String id) {
         Observable<Review> observable = service.getReview(id);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Review>() {
+                .subscribe(new Observer<Review>() {
                     @Override
-                    public void call(Review review) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Review review) {
                         if(review != null) {
                             view.showReview(review);
                         }
@@ -35,9 +46,19 @@ public class ReviewDetailPresenter implements ReviewDetailInterface {
     public void enableVote(final String idUser, final String idReview) {
         Observable<String> observable = service.checkReviewVoted(idUser,idReview);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .subscribe(new Observer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
                         if(s.equals("true")) {
                             view.enableVote(idUser,idReview);
                         }
@@ -49,9 +70,19 @@ public class ReviewDetailPresenter implements ReviewDetailInterface {
     public void rating(float rating, String idUser, String idReview) {
         Observable<String> observable = service.voteReview(rating,idUser,idReview);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .subscribe(new Observer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
                         if(s.equals("success")) {
                             view.voteSuccess();
                         }

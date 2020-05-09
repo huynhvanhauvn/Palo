@@ -7,6 +7,7 @@ import com.sbro.palo.Services.Service;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -23,9 +24,19 @@ public class MovieListPresenter implements MovieListInterface {
     public void showList(int type) {
         Observable<ArrayList<Movie>> observable = service.recentMovieList();
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
                             movieListView.showList(movies);
                         }

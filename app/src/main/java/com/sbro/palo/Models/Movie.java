@@ -16,15 +16,6 @@ public class Movie {
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("director")
-    @Expose
-    private String director;
-    @SerializedName("writer")
-    @Expose
-    private String writer;
-    @SerializedName("cast")
-    @Expose
-    private String cast;
     @SerializedName("rating")
     @Expose
     private String rating;
@@ -48,13 +39,10 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String id, String title, String description, String director, String writer, String cast, String rating, String vote, String trailer, String poster, String nation, String date) {
+    public Movie(String id, String title, String description, String rating, String vote, String trailer, String poster, String nation, String date) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.director = director;
-        this.writer = writer;
-        this.cast = cast;
         this.rating = rating;
         this.vote = vote;
         this.trailer = trailer;
@@ -85,30 +73,6 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public String getWriter() {
-        return writer;
-    }
-
-    public void setWriter(String writer) {
-        this.writer = writer;
-    }
-
-    public String getCast() {
-        return cast;
-    }
-
-    public void setCast(String cast) {
-        this.cast = cast;
     }
 
     public String getRating() {

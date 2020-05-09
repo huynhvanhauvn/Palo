@@ -2,6 +2,7 @@ package com.sbro.palo.Fragments.ProfileFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -27,18 +29,20 @@ import com.sbro.palo.Activities.WelcomeActivity;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.User;
 import com.sbro.palo.R;
+import com.sbro.palo.Utils.NetworkStateReceiver;
 
 import java.text.DecimalFormat;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment implements ProfileView {
+public class ProfileFragment extends Fragment implements ProfileView, NetworkStateReceiver.NetworkStateReceiverListener {
 
     private Button btnLogout, btnChangeProfile, btnChangePass, btnViewReview, btnAbout;
     private ProfilePresenter presenter;
     private ConstraintLayout layout;
     private TextView txtName, txtPoint;
+    private NetworkStateReceiver networkStateReceiver;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -130,5 +134,29 @@ public class ProfileFragment extends Fragment implements ProfileView {
         float point = Float.parseFloat(user.getPoint());
         DecimalFormat format = new DecimalFormat("0.0");
         txtPoint.setText(format.format(point));
+    }
+
+    @Override
+    public void networkAvailable() {
+
+    }
+
+    @Override
+    public void networkUnavailable() {
+        Toast.makeText(getContext(),"No Connection",Toast.LENGTH_SHORT).show();
+    }
+
+    public void startNetworkBroadcastReceiver(Context currentContext) {
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener((NetworkStateReceiver.NetworkStateReceiverListener) currentContext);
+        registerNetworkBroadcastReceiver(currentContext);
+    }
+
+    public void registerNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    public void unregisterNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.unregisterReceiver(networkStateReceiver);
     }
 }

@@ -9,6 +9,7 @@ import com.sbro.palo.Services.Service;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -25,9 +26,19 @@ public class SearchPresenter implements SearchInterface {
     public void getPopularTags() {
         Observable<ArrayList<String>> observable = service.getPopularTags();
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<String>>() {
+                .subscribe(new Observer<ArrayList<String>>() {
                     @Override
-                    public void call(ArrayList<String> strings) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<String> strings) {
                         if (strings != null) {
                             view.showPopularTags(strings);
                         }
@@ -39,9 +50,19 @@ public class SearchPresenter implements SearchInterface {
     public void updateKeyword(String keyword) {
         Observable<String> observable = service.updateKeyword(keyword);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .subscribe(new Observer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
 
                     }
                 });
@@ -51,9 +72,19 @@ public class SearchPresenter implements SearchInterface {
     public void search(String keyword) {
         Observable<ArrayList<Movie>> observable = service.searchResult(keyword);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
                             view.showResult(movies);
                         }
@@ -65,9 +96,19 @@ public class SearchPresenter implements SearchInterface {
     public void searchArtist(String keyword) {
         Observable<ArrayList<Artist>> observable = service.searchArtist(keyword);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Artist>>() {
+                .subscribe(new Observer<ArrayList<Artist>>() {
                     @Override
-                    public void call(ArrayList<Artist> artists) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Artist> artists) {
                         if(artists != null) {
                             view.showArtists(artists);
                         }
@@ -79,9 +120,19 @@ public class SearchPresenter implements SearchInterface {
     public void showBackground(String language) {
         Observable<Background> observable = service.background("search",language);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Background>() {
+                .subscribe(new Observer<Background>() {
                     @Override
-                    public void call(Background background) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
                         if(background != null) {
                             view.showBackground(background);
                         }

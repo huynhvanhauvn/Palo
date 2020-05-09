@@ -11,6 +11,7 @@ import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -27,9 +28,19 @@ public class LoginPresenter implements LoginInterface{
     public void infoUser(String user, String pass, final Context context, final Resources resources) {
         Observable<User> observable = service.login(user,pass);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<User>() {
+                .subscribe(new Observer<User>() {
                     @Override
-                    public void call(User user) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(User user) {
                         if(user.getId()!=null) {
                             loginView.infoUser(user);
                         } else {
@@ -45,9 +56,19 @@ public class LoginPresenter implements LoginInterface{
     public void updateBackground(String language) {
         Observable<Background> obBackground = service.background("login",language);
         obBackground.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Background>() {
+                .subscribe(new Observer<Background>() {
                     @Override
-                    public void call(Background background) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
                         if(background.getId() != null) {
                             loginView.updateBackground(background);
                         }

@@ -1,5 +1,7 @@
 package com.sbro.palo.Activities.ArtistActivity;
 
+import android.util.Log;
+
 import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Services.APIService;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -25,9 +28,19 @@ public class ArtistPresenter implements ArtistInterface {
     public void getArtist(String id) {
         Observable<Artist> observable = service.artistDetail(id, Locale.getDefault().getLanguage());
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Artist>() {
+                .subscribe(new Observer<Artist>() {
                     @Override
-                    public void call(Artist artist) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Artist artist) {
                         if(artist != null) {
                             view.showArtist(artist);
                         }
@@ -37,11 +50,21 @@ public class ArtistPresenter implements ArtistInterface {
 
     @Override
     public void getDirectList(String id) {
-        Observable<ArrayList<Movie>> observable = service.directorMovie(id);
+        Observable<ArrayList<Movie>> observable = service.artistmovie(id,1);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null && movies.size() > 0) {
                             view.showDirectList(movies);
                         }
@@ -51,11 +74,21 @@ public class ArtistPresenter implements ArtistInterface {
 
     @Override
     public void getWriteList(String id) {
-        Observable<ArrayList<Movie>> observable = service.writerMovie(id);
+        Observable<ArrayList<Movie>> observable = service.artistmovie(id, 2);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null && movies.size() > 0) {
                             view.showWriteList(movies);
                         }
@@ -65,11 +98,21 @@ public class ArtistPresenter implements ArtistInterface {
 
     @Override
     public void getActList(String id) {
-        Observable<ArrayList<Movie>> observable = service.castMovie(id);
+        Observable<ArrayList<Movie>> observable = service.artistmovie(id,3);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null && movies.size() > 0) {
                             view.showActList(movies);
                         }

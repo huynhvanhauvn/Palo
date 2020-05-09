@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -42,9 +43,19 @@ public class TrendPresenter implements TrendInterface {
     public void getBackground() {
         Observable<Background> observable = service.background("trend", Locale.getDefault().getLanguage());
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Background>() {
+                .subscribe(new Observer<Background>() {
                     @Override
-                    public void call(Background background) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
                         if(background != null) {
                             view.showBackground(background);
                         }
@@ -56,9 +67,19 @@ public class TrendPresenter implements TrendInterface {
     public void getTrend() {
         Observable<ArrayList<Movie>> observable = service.trendMovie();
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
                             view.showTrend(movies);
                         }
@@ -76,9 +97,19 @@ public class TrendPresenter implements TrendInterface {
             final int finalI = i;
             Observable<ArrayList<DateView>> observable = service.getDateView(charts.get(i).getId());
             observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<ArrayList<DateView>>() {
+                    .subscribe(new Observer<ArrayList<DateView>>() {
                         @Override
-                        public void call(ArrayList<DateView> dateViews) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ArrayList<DateView> dateViews) {
                             if(dateViews != null) {
                                 getEntries(dateViews);
                                 lineDataSet = new LineDataSet(lineEntries, "");

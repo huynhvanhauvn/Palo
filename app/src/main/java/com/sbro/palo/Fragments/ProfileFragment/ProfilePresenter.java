@@ -10,6 +10,7 @@ import com.sbro.palo.Services.Service;
 import java.util.Locale;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -26,9 +27,19 @@ public class ProfilePresenter implements ProfileInterface {
     public void getBackground() {
         Observable<Background> observable = service.background("profile", Locale.getDefault().getLanguage());
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Background>() {
+                .subscribe(new Observer<Background>() {
                     @Override
-                    public void call(Background background) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
                         if(background != null) {
                             view.showBackdround(background);
                         }
@@ -40,9 +51,19 @@ public class ProfilePresenter implements ProfileInterface {
     public void getProfile(String id) {
         Observable<User> observable = service.getProfile(id);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<User>() {
+                .subscribe(new Observer<User>() {
                     @Override
-                    public void call(User user) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(User user) {
                         if(user != null) {
                             view.showProfile(user);
                         }

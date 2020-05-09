@@ -9,6 +9,7 @@ import com.sbro.palo.Services.Service;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -26,10 +27,20 @@ public class HomePresenter implements HomeInterface {
         Service service = APIService.getService();
         Observable<ArrayList<Promotion>> promoObservable = service.promotion();
         promoObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Promotion>>() {
+                .subscribe(new Observer<ArrayList<Promotion>>() {
                     @Override
-                    public void call(ArrayList<Promotion> promotions) {
-                        if(promotions != null) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Promotion> promotions) {
+                        if (promotions != null) {
                             homeView.showHeader(promotions);
                         }
                     }
@@ -40,9 +51,19 @@ public class HomePresenter implements HomeInterface {
     public void showBackground(String language) {
         Observable<Background> backgroundObservable = service.background("home",language);
         backgroundObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Background>() {
+                .subscribe(new Observer<Background>() {
                     @Override
-                    public void call(Background background) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
                         if(background != null) {
                             homeView.showBackground(background);
                         }
@@ -54,9 +75,19 @@ public class HomePresenter implements HomeInterface {
     public void showRecentMovie() {
         Observable<ArrayList<Movie>> recentObservable = service.recentMovie();
         recentObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<Movie>>() {
                     @Override
-                    public void call(ArrayList<Movie> movies) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
                             homeView.showRecentMovie(movies);
                         }

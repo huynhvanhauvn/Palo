@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,16 +19,18 @@ import com.sbro.palo.Fragments.HomeFragment.HomeFragment;
 import com.sbro.palo.Fragments.ProfileFragment.ProfileFragment;
 import com.sbro.palo.Fragments.TrendFragment.TrendFragment;
 import com.sbro.palo.R;
+import com.sbro.palo.Utils.NetworkStateReceiver;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener {
 
     private HomeFragment homeFragment = new HomeFragment();
     private TrendFragment trendFragment = new TrendFragment();
     private ProfileFragment profileFragment = new ProfileFragment();
     private ViewPager viewPager;
+    private NetworkStateReceiver networkStateReceiver;
 
     private BottomNavigationView bottomNavigationView;
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -54,9 +58,34 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        startNetworkBroadcastReceiver(this);
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
 
+
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterNetworkBroadcastReceiver(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        registerNetworkBroadcastReceiver(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    public void networkAvailable() {
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -95,8 +124,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    public void networkUnavailable() {
+        Toast.makeText(getApplicationContext(),"No Connection",Toast.LENGTH_SHORT).show();
+    }
+
+    public void startNetworkBroadcastReceiver(Context currentContext) {
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener((NetworkStateReceiver.NetworkStateReceiverListener) currentContext);
+        registerNetworkBroadcastReceiver(currentContext);
+    }
+
+    public void registerNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    public void unregisterNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.unregisterReceiver(networkStateReceiver);
     }
 }

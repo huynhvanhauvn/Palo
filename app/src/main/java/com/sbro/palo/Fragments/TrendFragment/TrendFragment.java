@@ -1,6 +1,8 @@
 package com.sbro.palo.Fragments.TrendFragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -42,6 +44,7 @@ import com.sbro.palo.Models.Movie;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
+import com.sbro.palo.Utils.NetworkStateReceiver;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class TrendFragment extends Fragment implements TrendView {
+public class TrendFragment extends Fragment implements TrendView, NetworkStateReceiver.NetworkStateReceiverListener {
 
     private LineChart lineChart;
     private TrendPresenter presenter;
@@ -64,6 +67,7 @@ public class TrendFragment extends Fragment implements TrendView {
     private ImageView btnSearch, img1, img2, img3;
     private RecyclerView recyclerTrend;
     private CardView card1, card2, card3;
+    private NetworkStateReceiver networkStateReceiver;
 
     public TrendFragment() {
         // Required empty public constructor
@@ -210,5 +214,29 @@ public class TrendFragment extends Fragment implements TrendView {
     public void showChart(LineData lineData) {
         lineChart.setData(lineData);
         lineChart.invalidate();
+    }
+
+    @Override
+    public void networkAvailable() {
+
+    }
+
+    @Override
+    public void networkUnavailable() {
+        Toast.makeText(getContext(),"No Connection",Toast.LENGTH_SHORT).show();
+    }
+
+    public void startNetworkBroadcastReceiver(Context currentContext) {
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener((NetworkStateReceiver.NetworkStateReceiverListener) currentContext);
+        registerNetworkBroadcastReceiver(currentContext);
+    }
+
+    public void registerNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    public void unregisterNetworkBroadcastReceiver(Context currentContext) {
+        currentContext.unregisterReceiver(networkStateReceiver);
     }
 }

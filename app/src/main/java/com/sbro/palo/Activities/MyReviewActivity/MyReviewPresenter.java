@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -25,9 +26,19 @@ public class MyReviewPresenter implements MyReviewInterface {
     public void getListReview(String id) {
         Observable<ArrayList<Quote>> observable = service.getMyReview(id);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Quote>>() {
+                .subscribe(new Observer<ArrayList<Quote>>() {
                     @Override
-                    public void call(ArrayList<Quote> quotes) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Quote> quotes) {
                         if(quotes != null) {
                             view.showReviewList(quotes);
                         }
@@ -39,9 +50,19 @@ public class MyReviewPresenter implements MyReviewInterface {
     public void getBackground() {
         Observable<Background> observable = service.background("myreview", Locale.getDefault().getLanguage());
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Background>() {
+                .subscribe(new Observer<Background>() {
                     @Override
-                    public void call(Background background) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
                         if(background != null) {
                             view.showBackground(background);
                         }

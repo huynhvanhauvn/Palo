@@ -19,6 +19,7 @@ import com.sbro.palo.Services.Service;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -36,9 +37,19 @@ public class MoviePresenter implements MovieInterface {
     public void showMovie(String id, String language) {
         Observable<Movie> movieObservable = service.movie(id, language);
         movieObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Movie>() {
+                .subscribe(new Observer<Movie>() {
                     @Override
-                    public void call(Movie movie) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Movie movie) {
                         if(movie != null) {
                             movieView.showMovie(movie);
                         }
@@ -47,34 +58,46 @@ public class MoviePresenter implements MovieInterface {
     }
 
     @Override
-    public void getArtist(Context context, String[] ids, final RecyclerView recycler, final TextView textView) {
-        final ArrayList<Artist> artists = new ArrayList<>();
-        final ArtistAdapter adapter = new ArtistAdapter(context,artists);
-        for(String id : ids) {
-            if(!id.equals("")) {
-                Observable<Artist> artistObservable = service.artist(id);
-                artistObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<Artist>() {
-                            @Override
-                            public void call(Artist artist) {
-                                if(artist != null) {
-                                    artists.add(artist);
-                                    adapter.notifyDataSetChanged();
-                                    movieView.getArtist(adapter,recycler,textView);
-                                }
-                            }
-                        });
-            }
-        }
+    public void getArtist(String idMovie, final int role) {
+        Observable<ArrayList<Artist>> artistObservable = service.artist(idMovie, role);
+        artistObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Artist>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Artist> artists) {
+                        if (artists != null) {
+                            movieView.getArtist(artists, role);
+                        }
+                    }
+                });
     }
 
     @Override
     public void showRating(String idUser, String idMovie, final Context context, final Resources resources) {
         Observable<String> checkVotedObservable = service.checkVoted(idUser,idMovie);
         checkVotedObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .subscribe(new Observer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
                         if(s.equals("true")) {
                             movieView.showRating();
                         } else {
@@ -91,16 +114,36 @@ public class MoviePresenter implements MovieInterface {
         Observable<String> voteObservable = service.vote(rating,
                 idUser,idMovie);
         voteObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .subscribe(new Observer<String>() {
                     @Override
-                    public void call(String s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
                         if(s.equals("success")) {
                             Observable<String> ratingObservable = service.rating(idMovie);
                             ratingObservable.subscribeOn(Schedulers.newThread())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Action1<String>() {
+                                    .subscribe(new Observer<String>() {
                                         @Override
-                                        public void call(String s) {
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(String s) {
                                             if(s != null) {
                                                 movieView.updateRating(s);
                                             }
@@ -113,12 +156,21 @@ public class MoviePresenter implements MovieInterface {
 
     @Override
     public void showReviews(String id, final String title, final String poster) {
-        Log.d("hvhau",id);
         Observable<ArrayList<Quote>> observable = service.getQuote(id);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<Quote>>() {
+                .subscribe(new Observer<ArrayList<Quote>>() {
                     @Override
-                    public void call(ArrayList<Quote> quotes) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Quote> quotes) {
                         if(quotes != null) {
                             movieView.showReviews(quotes,title,poster);
                         }

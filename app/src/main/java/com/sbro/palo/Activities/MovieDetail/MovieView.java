@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public interface MovieView {
     void showMovie(Movie movie);
-    void getArtist(ArtistAdapter adapter, RecyclerView recycler, TextView textView);
+    void getArtist(ArrayList<Artist> artists, int role);
     void showRating();
     void updateRating(String rating);
     void showReviews(ArrayList<Quote> quotes, String title, String poster);
