@@ -328,50 +328,53 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         if(!storyPath.equals("")) {
             numUploadImg++;
             if(storyPath.equals("")) {
-                pushImage(storyPath, idReview, "storyImage", false);
+                pushImage(storyPath, idReview, "storyImage", false,"");
             } else {
-                pushImage(storyPath, idReview, "storyImage", true);
+                pushImage(storyPath, idReview, "storyImage", true, storyFile);
             }
         }
         if(!actPath.equals("")) {
             numUploadImg++;
             if(actFile.equals("")){
-                pushImage(actPath, idReview, "actingImage", false);
+                pushImage(actPath, idReview, "actingImage", false,"");
             } else {
-                pushImage(actPath, idReview, "storyImage", true);
+                pushImage(actPath, idReview, "storyImage", true, actFile);
             }
         }
         if(!picPath.equals("")) {
             numUploadImg++;
             if(actFile.equals("")) {
-                pushImage(picPath, idReview, "pictureImage", false);
+                pushImage(picPath, idReview, "pictureImage", false,"");
             } else {
-                pushImage(picPath, idReview, "pictureImage", true);
+                pushImage(picPath, idReview, "pictureImage", true, actFile);
             }
         }
         if(!soundPath.equals("")) {
             numUploadImg++;
             if(soundFile.equals("")) {
-                pushImage(soundPath, idReview, "soundImage", false);
+                pushImage(soundPath, idReview, "soundImage", false,"");
             } else {
-                pushImage(soundPath, idReview, "soundImage", true);
+                pushImage(soundPath, idReview, "soundImage", true, soundFile);
             }
         }
         if(!feelPath.equals("")) {
             numUploadImg++;
             if(feelFile.equals("")) {
-                pushImage(feelPath, idReview, "feelImage", false);
+                pushImage(feelPath, idReview, "feelImage", false,"");
             } else {
-                pushImage(feelPath, idReview, "feelImage", true);
+                pushImage(feelPath, idReview, "feelImage", true, feelFile);
             }
         }
         if(!msgPath.equals("")) {
             numUploadImg++;
             if(msgFile.equals("")) {
-                pushImage(msgPath, idReview, "messageImage", false);
+                pushImage(msgPath, idReview, "messageImage", false,"");
             } else {
-                pushImage(msgPath, idReview, "messageImage", true);
+                pushImage(msgPath, idReview, "messageImage", true, msgFile);
             }
+        }
+        if(numUploadImg<=0) {
+            finish();
         }
     }
 
@@ -380,27 +383,30 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         numUploadImg = 0;
         if(!storyPath.equals("")) {
             numUploadImg++;
-            pushImage(storyPath, idReview, "storyImage", false);
+            pushImage(storyPath, idReview, "storyImage", false,"");
         }
         if(!actPath.equals("")) {
             numUploadImg++;
-            pushImage(actPath, idReview, "actingImage", false);
+            pushImage(actPath, idReview, "actingImage", false,"");
         }
         if(!picPath.equals("")) {
             numUploadImg++;
-            pushImage(picPath, idReview, "pictureImage", false);
+            pushImage(picPath, idReview, "pictureImage", false,"");
         }
         if(!soundPath.equals("")) {
             numUploadImg++;
-            pushImage(soundPath, idReview, "soundImage", false);
+            pushImage(soundPath, idReview, "soundImage", false,"");
         }
         if(!feelPath.equals("")) {
             numUploadImg++;
-            pushImage(feelPath, idReview, "feelImage", false);
+            pushImage(feelPath, idReview, "feelImage", false,"");
         }
         if(!msgPath.equals("")) {
             numUploadImg++;
-            pushImage(msgPath, idReview, "messageImage", false);
+            pushImage(msgPath, idReview, "messageImage", false,"");
+        }
+        if(numUploadImg<=0) {
+            finish();
         }
     }
 
@@ -495,13 +501,13 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         }
     }
 
-    public void pushImage(String path, String id, String type, boolean isUpdate) {
+    public void pushImage(String path, String id, String type, boolean isUpdate, String oldFile) {
         File file = new File(path);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
         if(isUpdate) {
-            presenter.updateImage(body,id,type);
+            presenter.updateImage(body,id,type,oldFile);
         } else {
             presenter.uploadImage(body,id,type);
         }

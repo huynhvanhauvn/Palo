@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.ArtistActivity.ArtistActivity"></activity>
+        <activity android:name=".Activities.ChangeProfileActivity.ChangeProfileActivity"></activity>
+        <activity android:name=".Activities.ArtistActivity.ArtistActivity" />
         <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" />
         <activity android:name=".Activities.MyReviewActivity.MyReviewActivity" />
         <activity android:name=".Activities.SearchActivity.SearchActivity" />
@@ -31,6 +32,7 @@
         </activity>
         <activity android:name=".Activities.LoginActivity.LoginActivity" />
         <activity android:name=".Activities.MainActivity.MainActivity" />
+
         <receiver android:name=".Utils.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

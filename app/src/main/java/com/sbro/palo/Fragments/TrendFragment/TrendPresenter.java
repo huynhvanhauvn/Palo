@@ -11,6 +11,7 @@ import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Chart;
 import com.sbro.palo.Models.DateView;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.TrendMovie;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
@@ -65,9 +66,9 @@ public class TrendPresenter implements TrendInterface {
 
     @Override
     public void getTrend() {
-        Observable<ArrayList<Movie>> observable = service.trendMovie();
+        Observable<ArrayList<TrendMovie>> observable = service.movieTrend();
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<Movie>>() {
+                .subscribe(new Observer<ArrayList<TrendMovie>>() {
                     @Override
                     public void onCompleted() {
 
@@ -79,7 +80,7 @@ public class TrendPresenter implements TrendInterface {
                     }
 
                     @Override
-                    public void onNext(ArrayList<Movie> movies) {
+                    public void onNext(ArrayList<TrendMovie> movies) {
                         if(movies != null) {
                             view.showTrend(movies);
                         }

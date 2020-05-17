@@ -38,9 +38,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.sbro.palo.Activities.MovieDetail.MovieDetailActivity;
 import com.sbro.palo.Activities.SearchActivity.SearchActivity;
 import com.sbro.palo.Adapter.RecentAdapter;
+import com.sbro.palo.Adapter.TrendMovieAdapter;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.DateView;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.TrendMovie;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
@@ -157,7 +159,7 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
     }
 
     @Override
-    public void showTrend(final ArrayList<Movie> movies) {
+    public void showTrend(final ArrayList<TrendMovie> movies) {
         if(movies.size()>=3) {
             presenter.getTopData(movies.get(0).getId(),
                     movies.get(1).getId(),
@@ -191,14 +193,14 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
                 }
             });
 
-            final ArrayList<Movie> subMovies = new ArrayList<>(movies.subList(3,movies.size()));
+            final ArrayList<TrendMovie> subMovies = new ArrayList<>(movies.subList(3,movies.size()));
             if(subMovies.size()>0) {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 layoutManager.setOrientation(RecyclerView.VERTICAL);
                 recyclerTrend.setLayoutManager(layoutManager);
-                RecentAdapter adapter = new RecentAdapter(getContext(),subMovies);
+                TrendMovieAdapter adapter = new TrendMovieAdapter(getContext(),subMovies);
                 recyclerTrend.setAdapter(adapter);
-                adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
+                adapter.setOnItemClickListener(new TrendMovieAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(View view, int position) {
                         Intent intent = new Intent(getContext(), MovieDetailActivity.class);

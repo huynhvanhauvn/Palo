@@ -14,5 +14,5 @@ public interface ReviewInterface {
     void updateReview(String id, String intro, String story, String act, String pic, String sound, String feel,
                       String msg, String end);
     void uploadImage(MultipartBody.Part body, String idReview, String type);
-    void updateImage(MultipartBody.Part body, String idReview, String type);
+    void updateImage(MultipartBody.Part body, String idReview, String type, String oldFile);
 }

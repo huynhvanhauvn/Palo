@@ -7,6 +7,7 @@ import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
 import com.sbro.palo.Models.Quote;
 import com.sbro.palo.Models.Review;
+import com.sbro.palo.Models.TrendMovie;
 import com.sbro.palo.Models.User;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public interface Service {
     Observable<ArrayList<Movie>> recentMovieList();
 
     @GET("trendmovie.php")
-    Observable<ArrayList<Movie>> trendMovie();
+    Observable<ArrayList<Movie>> moviePopular();
 
     @FormUrlEncoded
     @POST("artistname.php")
@@ -59,6 +60,9 @@ public interface Service {
     @FormUrlEncoded
     @POST("movieinfo.php")
     Observable<Movie> movieInfo(@Field("id") String id);
+
+    @GET("movietrend.php")
+    Observable<ArrayList<TrendMovie>> movieTrend();
 
     @FormUrlEncoded
     @POST("artist.php")
@@ -112,7 +116,8 @@ public interface Service {
 
     @Multipart
     @POST("updateImage.php")
-    Observable<String> updateImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type);
+    Observable<String> updateImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type,
+                                   @Query("oldFile") String oldFile);
 
     @FormUrlEncoded
     @POST("quote.php")
@@ -120,7 +125,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("reviewdetail.php")
-    Observable<Review> getReview(@Field("id") String id);
+    Observable<Review> getReview(@Field("id") String id, @Field("language") String language);
 
     @GET("keyword.php")
     Observable<ArrayList<String>> getPopularTags();
@@ -156,4 +161,9 @@ public interface Service {
     @FormUrlEncoded
     @POST("artistlistmovie.php")
     Observable<ArrayList<Movie>> artistmovie(@Field("id") String id, @Field("role") int role);
+
+    @FormUrlEncoded
+    @POST("updateuser.php")
+    Observable<String> updateUser(@Field("id") String id, @Field("fullName") String fullName,
+                                            @Field("gender") String gender, @Field("birthday") String birthday);
 }

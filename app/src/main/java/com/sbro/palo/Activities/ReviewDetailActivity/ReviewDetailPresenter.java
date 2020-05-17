@@ -4,6 +4,8 @@ import com.sbro.palo.Models.Review;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
+import java.util.Locale;
+
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,7 +22,7 @@ public class ReviewDetailPresenter implements ReviewDetailInterface {
 
     @Override
     public void showReview(String id) {
-        Observable<Review> observable = service.getReview(id);
+        Observable<Review> observable = service.getReview(id, Locale.getDefault().getLanguage());
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Review>() {
                     @Override

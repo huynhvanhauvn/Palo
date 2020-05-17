@@ -45,4 +45,10 @@
     <string name="artist_act">Played</string>
     <string name="search_movie">Movies</string>
     <string name="search_artist">Artists</string>
+    <string name="cprofile_name">Display name</string>
+    <string name="cprofile_birthday">Birthday</string>
+    <string name="cprofile_gender">Gender</string>
+    <string name="cprofile_male">Male</string>
+    <string name="cprofile_female">Female</string>
+    <string name="cprofile_secret">Secret</string>
 </resources>

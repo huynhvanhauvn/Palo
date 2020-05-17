@@ -5,6 +5,8 @@ import com.sbro.palo.Models.Review;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
+import java.util.Locale;
+
 import okhttp3.MultipartBody;
 import rx.Observable;
 import rx.Observer;
@@ -46,7 +48,7 @@ public class ReviewPresenter implements ReviewInterface {
 
     @Override
     public void getReview(String idReview) {
-        Observable<Review> observable = service.getReview(idReview);
+        Observable<Review> observable = service.getReview(idReview, Locale.getDefault().getLanguage());
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Review>() {
                     @Override
@@ -142,8 +144,8 @@ public class ReviewPresenter implements ReviewInterface {
     }
 
     @Override
-    public void updateImage(MultipartBody.Part body, String idReview, String type) {
-        Observable<String> observable = service.updateImage(body, idReview, type);
+    public void updateImage(MultipartBody.Part body, String idReview, String type, String oldFile) {
+        Observable<String> observable = service.updateImage(body, idReview, type, oldFile);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<String>() {
                     @Override
