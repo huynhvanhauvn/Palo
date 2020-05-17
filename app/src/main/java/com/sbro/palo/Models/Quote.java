@@ -14,6 +14,15 @@ public class Quote {
     @SerializedName("idMovie")
     @Expose
     private String idMovie;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+    @SerializedName("vote")
+    @Expose
+    private String vote;
+    @SerializedName("view")
+    @Expose
+    private String view;
     @SerializedName("end")
     @Expose
     private String end;
@@ -49,6 +58,30 @@ public class Quote {
 
     public void setIdMovie(String idMovie) {
         this.idMovie = idMovie;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getVote() {
+        return vote;
+    }
+
+    public void setVote(String vote) {
+        this.vote = vote;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
     }
 
     public String getEnd() {

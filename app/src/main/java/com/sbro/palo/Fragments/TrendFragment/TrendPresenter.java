@@ -7,10 +7,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.sbro.palo.Models.ArtistTrend;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Chart;
 import com.sbro.palo.Models.DateView;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.Quote;
 import com.sbro.palo.Models.TrendMovie;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
@@ -124,6 +126,54 @@ public class TrendPresenter implements TrendInterface {
                         }
                     });
         }
+    }
+
+    @Override
+    public void getHotCast() {
+        Observable<ArrayList<ArtistTrend>> observable = service.hotCast();
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<ArtistTrend>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<ArtistTrend> artistTrends) {
+                        if(artistTrends != null) {
+                            view.showHotCast(artistTrends);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getHotReview() {
+        Observable<ArrayList<Quote>> observable = service.hotReview();
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Quote>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Quote> quotes) {
+                        if (quotes != null) {
+                            view.showHostReview(quotes);
+                        }
+                    }
+                });
     }
 
     private void getEntries(ArrayList<DateView> dateViews) {

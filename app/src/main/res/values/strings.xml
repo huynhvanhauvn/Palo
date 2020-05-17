@@ -51,4 +51,6 @@
     <string name="cprofile_male">Male</string>
     <string name="cprofile_female">Female</string>
     <string name="cprofile_secret">Secret</string>
+    <string name="trend_hot_cast">Hot Casts</string>
+    <string name="trend_hot_review">Hot Reviews</string>
 </resources>

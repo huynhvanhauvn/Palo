@@ -1,6 +1,7 @@
 package com.sbro.palo.Services;
 
 import com.sbro.palo.Models.Artist;
+import com.sbro.palo.Models.ArtistTrend;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.DateView;
 import com.sbro.palo.Models.Movie;
@@ -166,4 +167,10 @@ public interface Service {
     @POST("updateuser.php")
     Observable<String> updateUser(@Field("id") String id, @Field("fullName") String fullName,
                                             @Field("gender") String gender, @Field("birthday") String birthday);
+
+    @GET("artisttrendcast.php")
+    Observable<ArrayList<ArtistTrend>> hotCast();
+
+    @GET("reviewtrend.php")
+    Observable<ArrayList<Quote>> hotReview();
 }

@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,13 +36,21 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.sbro.palo.Activities.ArtistActivity.ArtistActivity;
 import com.sbro.palo.Activities.MovieDetail.MovieDetailActivity;
+import com.sbro.palo.Activities.MyReviewActivity.MyReviewActivity;
+import com.sbro.palo.Activities.ReviewActivity.ReviewActivity;
+import com.sbro.palo.Activities.ReviewDetailActivity.ReviewDetailActivity;
 import com.sbro.palo.Activities.SearchActivity.SearchActivity;
+import com.sbro.palo.Adapter.ArtistTrendAdapter;
 import com.sbro.palo.Adapter.RecentAdapter;
+import com.sbro.palo.Adapter.ReviewItemAdapter;
 import com.sbro.palo.Adapter.TrendMovieAdapter;
+import com.sbro.palo.Models.ArtistTrend;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.DateView;
 import com.sbro.palo.Models.Movie;
+import com.sbro.palo.Models.Quote;
 import com.sbro.palo.Models.TrendMovie;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
@@ -67,7 +76,7 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
     private SwipeRefreshLayout swipeRefreshLayout;
     private NestedScrollView scrollView;
     private ImageView btnSearch, img1, img2, img3;
-    private RecyclerView recyclerTrend;
+    private RecyclerView recyclerTrend, recyclerHotCast, recyclerHotReview;
     private CardView card1, card2, card3;
     private NetworkStateReceiver networkStateReceiver;
 
@@ -95,6 +104,8 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
         img2 = (ImageView) view.findViewById(R.id.trend_img2);
         img3 = (ImageView) view.findViewById(R.id.trend_img3);
         recyclerTrend = (RecyclerView) view.findViewById(R.id.trend_recycler_trend);
+        recyclerHotCast = (RecyclerView) view.findViewById(R.id.trend_recycler_hot_cast);
+        recyclerHotReview = (RecyclerView) view.findViewById(R.id.trend_recycler_hot_review);
         card1 = (CardView) view.findViewById(R.id.trend_card1);
         card2 = (CardView) view.findViewById(R.id.trend_card2);
         card3 = (CardView) view.findViewById(R.id.trend_card3);
@@ -138,6 +149,8 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
         presenter = new TrendPresenter(this, getResources());
         presenter.getBackground();
         presenter.getTrend();
+        presenter.getHotCast();
+        presenter.getHotReview();
 
         lineChart.setDescription(null);
         lineChart.setNoDataText("Updating...");
@@ -216,6 +229,41 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
     public void showChart(LineData lineData) {
         lineChart.setData(lineData);
         lineChart.invalidate();
+    }
+
+    @Override
+    public void showHotCast(ArrayList<ArtistTrend> artistTrends) {
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        recyclerHotCast.setLayoutManager(layoutManager);
+        final ArtistTrendAdapter adapter = new ArtistTrendAdapter(getContext(),artistTrends);
+        recyclerHotCast.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), ArtistActivity.class);
+                intent.putExtra(ArtistActivity.ID,adapter.getArtists().get(position).getId());
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void showHostReview(final ArrayList<Quote> quotes) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerHotReview.setLayoutManager(layoutManager);
+        ReviewItemAdapter adapter = new ReviewItemAdapter(getContext(),quotes);
+        recyclerHotReview.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ReviewItemAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), ReviewActivity.class);
+                intent.putExtra(ReviewDetailActivity.ID,quotes.get(position).getId());
+                intent.putExtra(ReviewDetailActivity.TITLE,quotes.get(position).getTitle());
+                intent.putExtra(ReviewDetailActivity.POSTER,quotes.get(position).getPoster());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

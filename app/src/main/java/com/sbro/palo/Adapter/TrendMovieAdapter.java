@@ -48,6 +48,7 @@ public class TrendMovieAdapter extends RecyclerView.Adapter<TrendMovieAdapter.Re
         final TrendMovie movie = movies.get(position);
         Glide.with(context).load(movie.getPoster()).centerCrop().into(holder.imgPoster);
         holder.txtTitle.setText(movie.getTitle());
+        holder.txtView.setText(movie.getTrend());
         Observable<ArrayList<String>> nameObservable = service.artistName(movie.getId(), 1);
         nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<String>>() {
@@ -83,7 +84,7 @@ public class TrendMovieAdapter extends RecyclerView.Adapter<TrendMovieAdapter.Re
     public class RecylerViewHolder extends RecyclerView.ViewHolder{
 
         private RoundedImageView imgPoster;
-        private TextView txtTitle, txtDirector;
+        private TextView txtTitle, txtDirector, txtView;
         private ConstraintLayout line;
 
         public RecylerViewHolder(@NonNull View itemView) {
@@ -91,6 +92,7 @@ public class TrendMovieAdapter extends RecyclerView.Adapter<TrendMovieAdapter.Re
             imgPoster = (RoundedImageView) itemView.findViewById(R.id.home_img_poster);
             txtTitle = (TextView) itemView.findViewById(R.id.home_txt_title);
             txtDirector = (TextView) itemView.findViewById(R.id.home_txt_director);
+            txtView = (TextView) itemView.findViewById(R.id.home_txt_view);
             line = (ConstraintLayout) itemView.findViewById(R.id.recent_line);
         }
     }

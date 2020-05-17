@@ -49,6 +49,7 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Re
                 }
             }
         });
+        holder.txtAuthor.setText(quote.getAuthor());
     }
 
     @Override
@@ -58,12 +59,13 @@ public class ReviewItemAdapter extends RecyclerView.Adapter<ReviewItemAdapter.Re
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         private RoundedImageView img;
-        private TextView txtTitle;
+        private TextView txtTitle, txtAuthor;
         private ConstraintLayout line;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             img = (RoundedImageView) itemView.findViewById(R.id.ireview_img_poster);
             txtTitle = (TextView) itemView.findViewById(R.id.ireview_txt_title);
+            txtAuthor = (TextView) itemView.findViewById(R.id.ireview_txt_author);
             line = (ConstraintLayout) itemView.findViewById(R.id.ireview_line);
         }
     }
