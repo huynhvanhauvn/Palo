@@ -94,4 +94,28 @@ public class HomePresenter implements HomeInterface {
                     }
                 });
     }
+
+    @Override
+    public void getBestMovie() {
+        Observable<ArrayList<Movie>> observable = service.bestMovie();
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Movie>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Movie> movies) {
+                        if(movies != null) {
+                            homeView.showBestMovie(movies);
+                        }
+                    }
+                });
+    }
 }

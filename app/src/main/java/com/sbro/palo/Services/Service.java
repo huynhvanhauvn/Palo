@@ -173,4 +173,10 @@ public interface Service {
 
     @GET("reviewtrend.php")
     Observable<ArrayList<Quote>> hotReview();
+
+    @GET("moviebest.php")
+    Observable<ArrayList<Movie>> bestMovie();
+
+    @GET("moviebestlist.php")
+    Observable<ArrayList<Movie>> bestMovieList();
 }

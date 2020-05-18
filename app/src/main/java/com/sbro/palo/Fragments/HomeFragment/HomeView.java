@@ -10,4 +10,5 @@ public interface HomeView {
     void showHeader(ArrayList<Promotion> promotions);
     void showBackground(Background background);
     void showRecentMovie(ArrayList<Movie> movies);
+    void showBestMovie(ArrayList<Movie> movies);
 }

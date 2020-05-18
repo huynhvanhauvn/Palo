@@ -51,10 +51,10 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
 
     private ViewPager2 viewPager;
     private Handler slideHandler = new Handler();
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, recyclerBest;
     private ConstraintLayout imgLayout;
     private HomePresenter presenter;
-    private ImageView imageView;
+    private ImageView imageView, btnMoreBest;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView btnSearch;
     private NestedScrollView scrollView;
@@ -76,10 +76,12 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
 
         viewPager = (ViewPager2) view.findViewById(R.id.home_viewPager);
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_recent);
+        recyclerBest = (RecyclerView) view.findViewById(R.id.home_recycler_best);
         imgLayout = (ConstraintLayout) view.findViewById(R.id.home_layout);
         imageView = (ImageView) view.findViewById(R.id.home_img_more_recent);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_scroll);
         btnSearch = (ImageView) view.findViewById(R.id.home_btn_search);
+        btnMoreBest = (ImageView) view.findViewById(R.id.home_img_more_best);
         scrollView = (NestedScrollView) view.findViewById(R.id.home_nested);
 
         scrollView.scrollTo(0,0);
@@ -146,6 +148,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
         });
 
         presenter.showHeader();
+        presenter.getBestMovie();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -216,6 +219,32 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), MovieListActivity.class);
                 intent.putExtra(MovieListActivity.TYPE,MovieListActivity.TYPE_RECENT);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void showBestMovie(final ArrayList<Movie> movies) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerBest.setLayoutManager(layoutManager);
+        RecentAdapter adapter = new RecentAdapter(getContext(),movies);
+        recyclerBest.setAdapter(adapter);
+        adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+                intent.putExtra("id",movies.get(position).getId());
+                startActivity(intent);
+            }
+        });
+        btnMoreBest.setVisibility(View.VISIBLE);
+        btnMoreBest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MovieListActivity.class);
+                intent.putExtra(MovieListActivity.TYPE,MovieListActivity.TYPE_BEST);
                 startActivity(intent);
             }
         });

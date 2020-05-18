@@ -19,6 +19,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
 
     public static final String TYPE = "type";
     public static final int TYPE_RECENT = 432;
+    public static final int TYPE_BEST = 433;
     private RecyclerView recycler;
     private MovieListPresenter presenter;
 

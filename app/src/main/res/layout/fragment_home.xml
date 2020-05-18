@@ -28,8 +28,8 @@
                 <ImageView
                     android:id="@+id/home_btn_search"
 
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
 
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -65,7 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    app:layout_constraintTop_toBottomOf="@+id/home_txt_recent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/home_txt_recent"
+
+                    android:nestedScrollingEnabled="false"/>
                 <ImageView
                     android:id="@+id/home_img_more_recent"
 
@@ -73,6 +75,39 @@
                     android:layout_height="50dp"
 
                     app:layout_constraintTop_toBottomOf="@id/home_recycler_recent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/ic_arrow_down"/>
+                <TextView
+                    android:id="@+id/home_txt_best"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toBottomOf="@+id/home_img_more_recent"
+
+                    android:layout_margin="8dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="@string/home_best"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_recycler_best"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toBottomOf="@+id/home_txt_best"
+
+                    android:nestedScrollingEnabled="false"/>
+                <ImageView
+                    android:id="@+id/home_img_more_best"
+
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+
+                    app:layout_constraintTop_toBottomOf="@id/home_recycler_best"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
 

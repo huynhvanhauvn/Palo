@@ -11,6 +11,7 @@
     <string name="login_failed">Please type username and password correctly</string>
     <string name="signup_btn">Sign Up</string>
     <string name="home_recent">Newest Movies</string>
+    <string name="home_best">Home Movies</string>
     <string name="detail_director">Director</string>
     <string name="detail_description">Description</string>
     <string name="detail_screen">Screen writer</string>
