@@ -421,7 +421,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CODE_STORY && data.getData() != null) {
+        if(requestCode == CODE_STORY && data != null && data.getData() != null) {
             Uri uri = data.getData();
             storyPath = new File(getRealPathFromURI(uri)).getAbsolutePath();
             // Load image
@@ -434,7 +434,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                 e.printStackTrace();
             }
         }
-        if(requestCode == CODE_ACT && data.getData() != null) {
+        if(requestCode == CODE_ACT && data != null && data.getData() != null) {
             Uri uri = data.getData();
             actPath = new File(getRealPathFromURI(uri)).getAbsolutePath();
             // Load image
@@ -447,7 +447,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                 e.printStackTrace();
             }
         }
-        if(requestCode == CODE_PIC && data.getData() != null) {
+        if(requestCode == CODE_PIC && data != null && data.getData() != null) {
             Uri uri = data.getData();
             picPath = new File(getRealPathFromURI(uri)).getAbsolutePath();
             // Load image
@@ -460,7 +460,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                 e.printStackTrace();
             }
         }
-        if(requestCode == CODE_SOUND && data.getData() != null) {
+        if(requestCode == CODE_SOUND && data != null && data.getData() != null) {
             Uri uri = data.getData();
             soundPath = new File(getRealPathFromURI(uri)).getAbsolutePath();
             // Load image
@@ -473,7 +473,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                 e.printStackTrace();
             }
         }
-        if(requestCode == CODE_FEEL && data.getData() != null) {
+        if(requestCode == CODE_FEEL && data != null && data.getData() != null) {
             Uri uri = data.getData();
             feelPath = new File(getRealPathFromURI(uri)).getAbsolutePath();
             // Load image
@@ -486,7 +486,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
                 e.printStackTrace();
             }
         }
-        if(requestCode == CODE_MSG && data.getData() != null) {
+        if(requestCode == CODE_MSG && data != null && data.getData() != null) {
             Uri uri = data.getData();
             msgPath = new File(getRealPathFromURI(uri)).getAbsolutePath();
             // Load image

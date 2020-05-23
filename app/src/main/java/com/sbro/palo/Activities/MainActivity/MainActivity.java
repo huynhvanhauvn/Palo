@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     private ProfileFragment profileFragment = new ProfileFragment();
     private ViewPager viewPager;
     private NetworkStateReceiver networkStateReceiver;
+    private int currentPage = 1;
 
     private BottomNavigationView bottomNavigationView;
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
+        viewPager.setOffscreenPageLimit(3);
 
 
     }
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     @Override
     protected void onPause() {
         unregisterNetworkBroadcastReceiver(this);
+        currentPage = viewPager.getCurrentItem();
         super.onPause();
     }
 
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         adapter.addFragment(homeFragment);
         adapter.addFragment(profileFragment);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(currentPage);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

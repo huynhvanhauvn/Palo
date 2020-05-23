@@ -9,6 +9,7 @@ import com.sbro.palo.Services.Service;
 
 import java.util.Locale;
 
+import okhttp3.MultipartBody;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,6 +67,30 @@ public class ProfilePresenter implements ProfileInterface {
                     public void onNext(User user) {
                         if(user != null) {
                             view.showProfile(user);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void updateAvatar(MultipartBody.Part body, String id, String oldFile) {
+        Observable<String> observable = service.updateAvatar(body,id,oldFile);
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        if(s != null) {
+                            view.updatedAvatar(s);
                         }
                     }
                 });

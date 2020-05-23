@@ -1,5 +1,6 @@
 package com.sbro.palo.Activities.SignUp;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.sbro.palo.Models.User;

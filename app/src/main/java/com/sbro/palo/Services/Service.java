@@ -14,7 +14,6 @@ import com.sbro.palo.Models.User;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -118,6 +117,11 @@ public interface Service {
     @Multipart
     @POST("updateImage.php")
     Observable<String> updateImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type,
+                                   @Query("oldFile") String oldFile);
+
+    @Multipart
+    @POST("updateavatar.php")
+    Observable<String> updateAvatar(@Part MultipartBody.Part file, @Query("id") String idUser,
                                    @Query("oldFile") String oldFile);
 
     @FormUrlEncoded
