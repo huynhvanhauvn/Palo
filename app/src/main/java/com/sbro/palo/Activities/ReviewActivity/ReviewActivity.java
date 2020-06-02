@@ -343,7 +343,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewView {
         }
         if(!picPath.equals("")) {
             numUploadImg++;
-            if(actFile.equals("")) {
+            if(picFile.equals("")) {
                 pushImage(picPath, idReview, "pictureImage", false,"");
             } else {
                 pushImage(picPath, idReview, "pictureImage", true, actFile);

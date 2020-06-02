@@ -47,7 +47,6 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
             public void onClick(View view) {
                 if(edtUsername != null && !edtUsername.getText().toString().equals("")
                         && edtPassword != null && !edtPassword.getText().toString().equals("")) {
-                    Service service = APIService.getService();
                     presenter.signup(edtUsername.getText().toString(), edtPassword.getText().toString());
                 }
             }
