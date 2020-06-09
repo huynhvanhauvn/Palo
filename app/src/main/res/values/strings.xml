@@ -3,6 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fb_id">571619577064740</string>
+    <string name="fb_login_id">fb571619577064740</string>
     <string name="all_confirm">Confirm</string>
     <string name="all_err_empty">Empty</string>
     <string name="login_user">Username</string>

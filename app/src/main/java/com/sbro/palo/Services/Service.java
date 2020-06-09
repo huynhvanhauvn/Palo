@@ -112,11 +112,11 @@ public interface Service {
 
     @Multipart
     @POST("uploadImage.php")
-    Observable<String> uploadImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type);
+    Observable<String> uploadImage(@Part MultipartBody.Part file, @Query("id") String idMovie, @Query("type") String type);
 
     @Multipart
     @POST("updateImage.php")
-    Observable<String> updateImage(@Part MultipartBody.Part file, @Query("id") String idUser, @Query("type") String type,
+    Observable<String> updateImage(@Part MultipartBody.Part file, @Query("id") String idMovie, @Query("type") String type,
                                    @Query("oldFile") String oldFile);
 
     @Multipart
@@ -131,6 +131,10 @@ public interface Service {
     @FormUrlEncoded
     @POST("reviewdetail.php")
     Observable<Review> getReview(@Field("id") String id, @Field("language") String language);
+
+    @FormUrlEncoded
+    @POST("reviewinfo.php")
+    Observable<Review> getReviewInfo(@Field("id") String id);
 
     @GET("keyword.php")
     Observable<ArrayList<String>> getPopularTags();
