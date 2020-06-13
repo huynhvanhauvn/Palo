@@ -2,9 +2,12 @@ package com.sbro.palo.Activities.ChangeProfileActivity;
 
 import android.util.Log;
 
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.User;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
+
+import java.util.Locale;
 
 import rx.Observable;
 import rx.Observer;
@@ -64,6 +67,30 @@ public class ChangeProfilePresenter implements ChangeProfileInterface {
                     public void onNext(String s) {
                         if(s != null && s.equals("success")) {
                             view.updateSuccess();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getBackground() {
+        Observable<Background> observable = service.background("changeprofile", Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Background>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
+                        if(background != null) {
+                            view.showBackground(background);
                         }
                     }
                 });

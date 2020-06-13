@@ -3,9 +3,12 @@ package com.sbro.palo.Activities.SignUp;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.User;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
+
+import java.util.Locale;
 
 import rx.Observable;
 import rx.Observer;
@@ -15,11 +18,11 @@ import rx.schedulers.Schedulers;
 
 public class SignupPresenter implements SignupInterface {
 
-    private SignupView signupView;
+    private SignupView view;
     private Service service = APIService.getService();
 
     public SignupPresenter(SignupView signupView) {
-        this.signupView = signupView;
+        this.view = signupView;
     }
 
     @Override
@@ -41,7 +44,31 @@ public class SignupPresenter implements SignupInterface {
                     @Override
                     public void onNext(String s) {
                         if(s.equals("success")) {
-                            signupView.signup(username, password);
+                            view.signup(username, password);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getBackground() {
+        Observable<Background> observable = service.background("signup", Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Background>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
+                        if(background != null) {
+                            view.showBackground(background);
                         }
                     }
                 });

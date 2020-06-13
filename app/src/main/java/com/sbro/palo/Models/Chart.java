@@ -1,7 +1,5 @@
 package com.sbro.palo.Models;
 
-import android.graphics.Color;
-
 public class Chart {
     private String id;
     private int color;

@@ -6,7 +6,7 @@ import com.sbro.palo.Models.User;
 import okhttp3.MultipartBody;
 
 public interface ProfileView {
-    void showBackdround(Background background);
+    void showBackground(Background background);
     void showProfile(User user);
     void updatedAvatar(String result);
 }

@@ -1,11 +1,15 @@
 package com.sbro.palo.Activities.ChangePassActivity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,8 +17,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.LoginActivity.LoginActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.R;
 
 public class ChangePassActivity extends AppCompatActivity implements ChangePassView {
@@ -24,6 +32,7 @@ public class ChangePassActivity extends AppCompatActivity implements ChangePassV
     private String mPass, mId;
     private CardView btnChange;
     private ChangePassPresenter presenter;
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +44,10 @@ public class ChangePassActivity extends AppCompatActivity implements ChangePassV
         edtNew = (EditText) findViewById(R.id.pass_edt_newpass);
         edtConfirm = (EditText) findViewById(R.id.pass_edt_confirmpass);
         btnChange = (CardView) findViewById(R.id.pass_btn_change);
+        layout = (ConstraintLayout) findViewById(R.id.pass_layout);
 
         presenter = new ChangePassPresenter(this);
+        presenter.showBackground();
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(WelcomeActivity.SHARED_DATA,
                 Context.MODE_PRIVATE);
         mPass = preferences.getString(WelcomeActivity.PASSWORD,"");
@@ -129,5 +140,21 @@ public class ChangePassActivity extends AppCompatActivity implements ChangePassV
         Intent intent = new Intent(ChangePassActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void showBackground(Background background) {
+        Glide.with(getApplicationContext()).load(background.getImage()).into(new CustomTarget<Drawable>() {
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                layout.setBackground(resource);
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+        });
     }
 }

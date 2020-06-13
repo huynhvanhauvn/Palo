@@ -13,7 +13,7 @@
     <string name="login_failed">Please type username and password correctly</string>
     <string name="signup_btn">Sign Up</string>
     <string name="home_recent">Newest Movies</string>
-    <string name="home_best">Home Movies</string>
+    <string name="home_best">Best Movies</string>
     <string name="detail_director">Director</string>
     <string name="detail_description">Description</string>
     <string name="detail_screen">Screen writer</string>
@@ -36,7 +36,7 @@
     <string name="profile_edt_profile">Change Profile</string>
     <string name="profile_change_pass">Change Password</string>
     <string name="profile_list_review">View My Review</string>
-    <string name="profile_about">About</string>
+    <string name="profile_about">Feedback</string>
     <string name="pass_old">Old Password</string>
     <string name="pass_new">New Password</string>
     <string name="pass_confirm">Confirm Password</string>
@@ -56,4 +56,8 @@
     <string name="cprofile_secret">Secret</string>
     <string name="trend_hot_cast">Hot Casts</string>
     <string name="trend_hot_review">Hot Reviews</string>
+    <string name="feedback_err">Empty</string>
+    <string name="feedback_holder">Thanks for your feedback!</string>
+    <string name="feedback_type_ux">User Experience</string>
+    <string name="feedback_type_content">Content</string>
 </resources>

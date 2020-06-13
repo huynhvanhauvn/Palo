@@ -42,7 +42,7 @@ public class ProfilePresenter implements ProfileInterface {
                     @Override
                     public void onNext(Background background) {
                         if(background != null) {
-                            view.showBackdround(background);
+                            view.showBackground(background);
                         }
                     }
                 });

@@ -99,7 +99,8 @@
                     app:layout_constraintTop_toTopOf="@+id/artist_bg1"
                     app:layout_constraintBottom_toBottomOf="@+id/artist_bg1"
                     app:layout_constraintRight_toRightOf="@+id/artist_bg1"
-                    />
+
+                    android:textColor="@android:color/white"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -132,7 +133,9 @@
                     app:layout_constraintLeft_toLeftOf="@+id/artist_bg2"
                     app:layout_constraintTop_toTopOf="@+id/artist_bg2"
                     app:layout_constraintBottom_toBottomOf="@+id/artist_bg2"
-                    app:layout_constraintRight_toRightOf="@+id/artist_bg2" />
+                    app:layout_constraintRight_toRightOf="@+id/artist_bg2"
+
+                    android:textColor="@android:color/white"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -164,7 +167,8 @@
                     app:layout_constraintTop_toTopOf="@+id/artist_bg3"
                     app:layout_constraintBottom_toBottomOf="@+id/artist_bg3"
                     app:layout_constraintRight_toRightOf="@+id/artist_bg3"
-                    />
+
+                    android:textColor="@android:color/white"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
         <androidx.core.widget.NestedScrollView

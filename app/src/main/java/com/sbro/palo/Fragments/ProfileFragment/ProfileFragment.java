@@ -30,10 +30,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.ChangePassActivity.ChangePassActivity;
 import com.sbro.palo.Activities.ChangeProfileActivity.ChangeProfileActivity;
+import com.sbro.palo.Activities.FeedbackActivity.FeedbackActivity;
 import com.sbro.palo.Activities.LoginActivity.LoginActivity;
 import com.sbro.palo.Activities.MyReviewActivity.MyReviewActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
@@ -51,9 +53,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProfileFragment extends Fragment implements ProfileView, NetworkStateReceiver.NetworkStateReceiverListener {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 436;
@@ -146,7 +145,8 @@ public class ProfileFragment extends Fragment implements ProfileView, NetworkSta
         btnAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getContext(), FeedbackActivity.class);
+                startActivity(intent);
             }
         });
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -165,11 +165,17 @@ public class ProfileFragment extends Fragment implements ProfileView, NetworkSta
     }
 
     @Override
-    public void showBackdround(Background background) {
-        Glide.with(getContext()).load(background.getImage()).into(new SimpleTarget<Drawable>() {
+    public void showBackground(Background background) {
+        Glide.with(getContext()).load(background.getImage()).into(new CustomTarget<Drawable>() {
+
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 layout.setBackground(resource);
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
             }
         });
     }

@@ -257,7 +257,7 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
         adapter.setOnItemClickListener(new ReviewItemAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
-                Intent intent = new Intent(getContext(), ReviewActivity.class);
+                Intent intent = new Intent(getContext(), ReviewDetailActivity.class);
                 intent.putExtra(ReviewDetailActivity.ID,quotes.get(position).getId());
                 intent.putExtra(ReviewDetailActivity.TITLE,quotes.get(position).getTitle());
                 intent.putExtra(ReviewDetailActivity.POSTER,quotes.get(position).getPoster());

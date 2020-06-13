@@ -1,18 +1,26 @@
 package com.sbro.palo.Activities.SignUp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.LoginActivity.LoginActivity;
 import com.sbro.palo.Activities.WelcomeActivity;
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.User;
 import com.sbro.palo.R;
 import com.sbro.palo.Services.APIService;
@@ -29,6 +37,7 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
     private EditText edtPassword;
     private SignupPresenter presenter;
     private CardView btnSignup;
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,9 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
         edtUsername = (EditText) findViewById(R.id.signup_edt_username);
         edtPassword = (EditText) findViewById(R.id.signup_edt_password);
         btnSignup = (CardView) findViewById(R.id.signup_btn_signup);
+        layout = (ConstraintLayout) findViewById(R.id.signup_layout);
+
+        presenter.getBackground();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,5 +84,21 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
         startActivity(intent);
         finish();
         super.onBackPressed();
+    }
+
+    @Override
+    public void showBackground(Background background) {
+        Glide.with(getApplicationContext()).load(background.getImage()).into(new CustomTarget<Drawable>() {
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                layout.setBackground(resource);
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+        });
     }
 }

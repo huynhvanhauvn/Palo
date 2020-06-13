@@ -1,11 +1,15 @@
 package com.sbro.palo.Activities.ChangeProfileActivity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +23,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.sbro.palo.Activities.WelcomeActivity;
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.User;
 import com.sbro.palo.R;
 
@@ -39,6 +47,7 @@ public class ChangeProfileActivity extends AppCompatActivity implements ChangePr
     private CardView btnConfirm;
     private String gender = "2";
     private String id = "";
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +63,10 @@ public class ChangeProfileActivity extends AppCompatActivity implements ChangePr
         radSecret = (RadioButton) findViewById(R.id.cprofile_rad_secret);
         btnCalendar = (ImageButton) findViewById(R.id.cprofile_btn_birthday);
         btnConfirm = (CardView) findViewById(R.id.cprofile_btn_change);
+        layout = (ConstraintLayout) findViewById(R.id.cprofile_layout);
 
         presenter = new ChangeProfilePresenter(this);
+        presenter.getBackground();
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(WelcomeActivity.SHARED_DATA,
                 Context.MODE_PRIVATE);
         id = preferences.getString(WelcomeActivity.USER_ID,"");
@@ -147,5 +158,21 @@ public class ChangeProfileActivity extends AppCompatActivity implements ChangePr
     @Override
     public void updateSuccess() {
         finish();
+    }
+
+    @Override
+    public void showBackground(Background background) {
+        Glide.with(getApplicationContext()).load(background.getImage()).into(new CustomTarget<Drawable>() {
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                layout.setBackground(resource);
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+        });
     }
 }

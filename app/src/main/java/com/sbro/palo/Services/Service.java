@@ -187,4 +187,9 @@ public interface Service {
 
     @GET("moviebestlist.php")
     Observable<ArrayList<Movie>> bestMovieList();
+
+    @FormUrlEncoded
+    @POST("feedback.php")
+    Observable<String> feedback(@Field("type") int type, @Field("feedback") String feedback,
+                                @Field("idUser") String idUser);
 }
