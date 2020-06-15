@@ -1,10 +1,12 @@
 package com.sbro.palo.Activities.MovieList;
 
+import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Services.APIService;
 import com.sbro.palo.Services.Service;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import rx.Observable;
 import rx.Observer;
@@ -16,11 +18,11 @@ import static com.sbro.palo.Activities.MovieList.MovieListActivity.TYPE_BEST;
 import static com.sbro.palo.Activities.MovieList.MovieListActivity.TYPE_RECENT;
 
 public class MovieListPresenter implements MovieListInterface {
-    private MovieListView movieListView;
+    private MovieListView view;
     private Service service = APIService.getService();
 
     public MovieListPresenter(MovieListView movieListView) {
-        this.movieListView = movieListView;
+        this.view = movieListView;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class MovieListPresenter implements MovieListInterface {
                     @Override
                     public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
-                            movieListView.showList(movies);
+                            view.showList(movies);
                         }
                     }
                 });
@@ -77,7 +79,31 @@ public class MovieListPresenter implements MovieListInterface {
                     @Override
                     public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
-                            movieListView.showList(movies);
+                            view.showList(movies);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getBackground() {
+        Observable<Background> observable = service.background("movielist", Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Background>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Background background) {
+                        if(background != null) {
+                            view.showBackground(background);
                         }
                     }
                 });

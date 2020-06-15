@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
     private RecyclerView recyclerView, recyclerBest;
     private ConstraintLayout imgLayout;
     private HomePresenter presenter;
-    private ImageView imageView, btnMoreBest;
+    private ImageView btnMoreRecent, btnMoreBest;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView btnSearch;
     private NestedScrollView scrollView;
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_recent);
         recyclerBest = (RecyclerView) view.findViewById(R.id.home_recycler_best);
         imgLayout = (ConstraintLayout) view.findViewById(R.id.home_layout);
-        imageView = (ImageView) view.findViewById(R.id.home_img_more_recent);
+        btnMoreRecent = (ImageView) view.findViewById(R.id.home_img_more_recent);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_scroll);
         btnSearch = (ImageView) view.findViewById(R.id.home_btn_search);
         btnMoreBest = (ImageView) view.findViewById(R.id.home_img_more_best);
@@ -213,8 +213,8 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
                 startActivity(intent);
             }
         });
-        imageView.setVisibility(View.VISIBLE);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        btnMoreRecent.setVisibility(View.VISIBLE);
+        btnMoreRecent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), MovieListActivity.class);
