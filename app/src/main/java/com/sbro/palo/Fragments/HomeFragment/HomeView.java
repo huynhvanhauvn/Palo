@@ -1,5 +1,6 @@
 package com.sbro.palo.Fragments.HomeFragment;
 
+import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
@@ -11,4 +12,5 @@ public interface HomeView {
     void showBackground(Background background);
     void showRecentMovie(ArrayList<Movie> movies);
     void showBestMovie(ArrayList<Movie> movies);
+    void showArtistBirthday(ArrayList<Artist> artists);
 }

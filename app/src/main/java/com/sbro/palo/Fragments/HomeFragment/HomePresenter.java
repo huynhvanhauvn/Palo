@@ -1,5 +1,6 @@
 package com.sbro.palo.Fragments.HomeFragment;
 
+import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
@@ -114,6 +115,30 @@ public class HomePresenter implements HomeInterface {
                     public void onNext(ArrayList<Movie> movies) {
                         if(movies != null) {
                             homeView.showBestMovie(movies);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getArtistBirthday() {
+        Observable<ArrayList<Artist>> observable = service.artistBirthday();
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Artist>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Artist> artists) {
+                        if(artists != null) {
+                            homeView.showArtistBirthday(artists);
                         }
                     }
                 });

@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.sbro.palo.Services.Service;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -31,6 +34,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
     private Context context;
     private ArrayList<Movie> movies;
     private Service service = APIService.getService();
+    private int lastPosition = -1;
 
     public RecentAdapter(Context context, ArrayList<Movie> movies) {
         this.context = context;
@@ -51,9 +55,19 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
         holder.txtTitle.setText(movie.getTitle());
         Observable<ArrayList<String>> nameObservable = service.artistName(movie.getId(), 1);
         nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<String>>() {
+                .subscribe(new Observer<ArrayList<String>>() {
                     @Override
-                    public void call(ArrayList<String> s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<String> s) {
                         if(s!=null && s.size()>0) {
                             String names = s.get(0);
                             if(s.size()>1) {
@@ -74,6 +88,11 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
                 }
             }
         });
+        Animation animation = AnimationUtils.loadAnimation(context,
+                (position > lastPosition) ? R.anim.anim_load_list
+                        : R.anim.anim_load_list_out);
+        holder.line.startAnimation(animation);
+        lastPosition = position;
     }
 
     @Override

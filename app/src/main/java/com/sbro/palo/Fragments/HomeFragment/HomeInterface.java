@@ -11,4 +11,5 @@ public interface HomeInterface {
     void showBackground(String language);
     void showRecentMovie();
     void getBestMovie();
+    void getArtistBirthday();
 }

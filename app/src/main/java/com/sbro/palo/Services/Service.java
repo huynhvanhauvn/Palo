@@ -192,4 +192,7 @@ public interface Service {
     @POST("feedback.php")
     Observable<String> feedback(@Field("type") int type, @Field("feedback") String feedback,
                                 @Field("idUser") String idUser);
+
+    @GET("artistbirthday.php")
+    Observable<ArrayList<Artist>> artistBirthday();
 }

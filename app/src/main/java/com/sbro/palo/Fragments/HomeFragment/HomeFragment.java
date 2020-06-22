@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,11 +33,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.sbro.palo.Activities.ArtistActivity.ArtistActivity;
 import com.sbro.palo.Activities.MovieDetail.MovieDetailActivity;
 import com.sbro.palo.Activities.MovieList.MovieListActivity;
 import com.sbro.palo.Activities.SearchActivity.SearchActivity;
 import com.sbro.palo.Adapter.RecentAdapter;
 import com.sbro.palo.Adapter.SlideAdapter;
+import com.sbro.palo.Adapter.SlideArtistAdapter;
+import com.sbro.palo.Models.Artist;
 import com.sbro.palo.Models.Background;
 import com.sbro.palo.Models.Movie;
 import com.sbro.palo.Models.Promotion;
@@ -49,16 +53,18 @@ import java.util.Locale;
 
 public class HomeFragment extends Fragment implements HomeView, NetworkStateReceiver.NetworkStateReceiverListener {
 
-    private ViewPager2 viewPager;
+    private ViewPager2 viewPager, pagerArtist;
     private Handler slideHandler = new Handler();
+    private Handler slideHandlerArtist = new Handler();
     private RecyclerView recyclerView, recyclerBest;
-    private ConstraintLayout imgLayout;
+    private ConstraintLayout imgLayout, layoutBirthday;
     private HomePresenter presenter;
     private ImageView btnMoreRecent, btnMoreBest;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView btnSearch;
     private NestedScrollView scrollView;
     private NetworkStateReceiver networkStateReceiver;
+    private TextView txtRecent, txtBest;
 
     public HomeFragment() {
 
@@ -75,14 +81,18 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
         super.onViewCreated(view, savedInstanceState);
 
         viewPager = (ViewPager2) view.findViewById(R.id.home_viewPager);
+        pagerArtist = (ViewPager2) view.findViewById(R.id.home_pager_artist);
         recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_recent);
         recyclerBest = (RecyclerView) view.findViewById(R.id.home_recycler_best);
         imgLayout = (ConstraintLayout) view.findViewById(R.id.home_layout);
+        layoutBirthday = (ConstraintLayout) view.findViewById(R.id.home_birthday);
         btnMoreRecent = (ImageView) view.findViewById(R.id.home_img_more_recent);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.home_scroll);
         btnSearch = (ImageView) view.findViewById(R.id.home_btn_search);
         btnMoreBest = (ImageView) view.findViewById(R.id.home_img_more_best);
         scrollView = (NestedScrollView) view.findViewById(R.id.home_nested);
+        txtRecent = (TextView) view.findViewById(R.id.home_txt_recent);
+        txtBest = (TextView) view.findViewById(R.id.home_txt_best);
 
         scrollView.scrollTo(0,0);
         try {
@@ -147,7 +157,31 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
             }
         });
 
+        pagerArtist.setClipToPadding(false);
+        pagerArtist.setClipChildren(false);
+        pagerArtist.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        CompositePageTransformer transformerArtist = new CompositePageTransformer();
+        transformer.addTransformer(new MarginPageTransformer(40));
+        transformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.6f + r * 0.4f);
+            }
+        });
+        pagerArtist.setPageTransformer(transformerArtist);
+        pagerArtist.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                slideHandlerArtist.removeCallbacks(slideRunnableArtist);
+                slideHandlerArtist.postDelayed(slideRunnableArtist,3000);
+            }
+        });
+
         presenter.showHeader();
+        presenter.getArtistBirthday();
         presenter.getBestMovie();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -162,18 +196,27 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
     public void onPause() {
         super.onPause();
         slideHandler.removeCallbacks(slideRunnable);
+        slideHandlerArtist.removeCallbacks(slideRunnableArtist);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         slideHandler.postDelayed(slideRunnable,5000);
+        slideHandlerArtist.postDelayed(slideRunnableArtist,3000);
     }
 
     private Runnable slideRunnable = new Runnable() {
         @Override
         public void run() {
             viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+        }
+    };
+
+    private Runnable slideRunnableArtist = new Runnable() {
+        @Override
+        public void run() {
+            pagerArtist.setCurrentItem(pagerArtist.getCurrentItem()+1);
         }
     };
 
@@ -203,6 +246,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
 
     @Override
     public void showRecentMovie(final ArrayList<Movie> movies) {
+        txtRecent.setVisibility(View.VISIBLE);
         RecentAdapter adapter = new RecentAdapter(getContext(),movies);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
@@ -226,6 +270,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
 
     @Override
     public void showBestMovie(final ArrayList<Movie> movies) {
+        txtBest.setVisibility(View.VISIBLE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerBest.setLayoutManager(layoutManager);
@@ -245,6 +290,21 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), MovieListActivity.class);
                 intent.putExtra(MovieListActivity.TYPE,MovieListActivity.TYPE_BEST);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void showArtistBirthday(final ArrayList<Artist> artists) {
+        layoutBirthday.setVisibility(View.VISIBLE);
+        SlideArtistAdapter adapter = new SlideArtistAdapter(getContext(), artists, pagerArtist);
+        pagerArtist.setAdapter(adapter);
+        adapter.setOnItemClickListener(new SlideArtistAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), ArtistActivity.class);
+                intent.putExtra(ArtistActivity.ID,artists.get(position).getId());
                 startActivity(intent);
             }
         });

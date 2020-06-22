@@ -21,6 +21,7 @@ import com.sbro.palo.Services.Service;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -51,9 +52,19 @@ public class TrendMovieAdapter extends RecyclerView.Adapter<TrendMovieAdapter.Re
         holder.txtView.setText(movie.getTrend());
         Observable<ArrayList<String>> nameObservable = service.artistName(movie.getId(), 1);
         nameObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ArrayList<String>>() {
+                .subscribe(new Observer<ArrayList<String>>() {
                     @Override
-                    public void call(ArrayList<String> s) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<String> s) {
                         if(s!=null && s.size()>0) {
                             String names = s.get(0);
                             if(s.size()>1) {

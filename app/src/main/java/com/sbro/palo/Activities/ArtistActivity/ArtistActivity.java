@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
     private RecyclerView recyclerDirect, recyclerWrite, recyclerAct;
     private ConstraintLayout layout;
     private Artist mArtist = new Artist();
+    private ConstraintLayout layoutBirthday, layoutRole, layoutNation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
         recyclerWrite = (RecyclerView) findViewById(R.id.artist_recycler_write);
         recyclerAct = (RecyclerView) findViewById(R.id.artist_recycler_act);
         layout = (ConstraintLayout) findViewById(R.id.artist_layout);
+        layoutBirthday = (ConstraintLayout) findViewById(R.id.artist_layout_birthday);
+        layoutRole = (ConstraintLayout) findViewById(R.id.artist_layout_role);
+        layoutNation = (ConstraintLayout) findViewById(R.id.artist_layout_nation);
 
         presenter = new ArtistPresenter(this);
         Intent intent = getIntent();
@@ -78,6 +83,15 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
         presenter.getDirectList(artist.getId());
         presenter.getWriteList(artist.getId());
         presenter.getActList(artist.getId());
+        layoutBirthday.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.anim_load_list));
+        layoutBirthday.setVisibility(View.VISIBLE);
+        layoutRole.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.anim_load_list));
+        layoutRole.setVisibility(View.VISIBLE);
+        layoutNation.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.anim_load_list));
+        layoutNation.setVisibility(View.VISIBLE);
     }
 
     @Override
