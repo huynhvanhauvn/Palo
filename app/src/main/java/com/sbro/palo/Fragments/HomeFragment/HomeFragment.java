@@ -297,17 +297,19 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
 
     @Override
     public void showArtistBirthday(final ArrayList<Artist> artists) {
-        layoutBirthday.setVisibility(View.VISIBLE);
-        SlideArtistAdapter adapter = new SlideArtistAdapter(getContext(), artists, pagerArtist);
-        pagerArtist.setAdapter(adapter);
-        adapter.setOnItemClickListener(new SlideArtistAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(View view, int position) {
-                Intent intent = new Intent(getContext(), ArtistActivity.class);
-                intent.putExtra(ArtistActivity.ID,artists.get(position).getId());
-                startActivity(intent);
-            }
-        });
+        if(artists.size()>0) {
+            layoutBirthday.setVisibility(View.VISIBLE);
+            SlideArtistAdapter adapter = new SlideArtistAdapter(getContext(), artists, pagerArtist);
+            pagerArtist.setAdapter(adapter);
+            adapter.setOnItemClickListener(new SlideArtistAdapter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(View view, int position) {
+                    Intent intent = new Intent(getContext(), ArtistActivity.class);
+                    intent.putExtra(ArtistActivity.ID,artists.get(position).getId());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
