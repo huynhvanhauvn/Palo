@@ -33,6 +33,14 @@
     <string name="review_message">Message</string>
     <string name="review_conclude">Conclude</string>
     <string name="review_send">Send Review</string>
+    <string name="review_hint_intro">You can enter the introductory article if desired.</string>
+    <string name="review_hint_story">Please give your opinion on the plot of the film.</string>
+    <string name="review_hint_act">Please give your opinion on the acting of the cast.</string>
+    <string name="review_hint_pic">If you want, you can rate the image of the film.</string>
+    <string name="review_hint_sound">If you want, you can rate the sound of the film.</string>
+    <string name="review_hint_feel">Do you have an appreciation for the emotion the film would bring?</string>
+    <string name="review_hint_msg">Please give your opinion on the message that the film conveys.</string>
+    <string name="review_hint_conclude">Please close the article with a great message!</string>
     <string name="profile_logout">Logout</string>
     <string name="profile_edt_profile">Change Profile</string>
     <string name="profile_change_pass">Change Password</string>

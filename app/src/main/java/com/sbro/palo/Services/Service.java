@@ -74,11 +74,13 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("vote.php")
-    Observable<String> vote(@Field("rating") float rating, @Field("idUser") String idUser, @Field("idMovie") String idMovie);
+    Observable<String> vote(@Field("rating") float rating, @Field("idUser") String idUser,
+                            @Field("idMovie") String idMovie);
 
     @FormUrlEncoded
     @POST("reviewvote.php")
-    Observable<String> voteReview(@Field("rating") float rating, @Field("idUser") String idUser, @Field("idReview") String idReview);
+    Observable<String> voteReview(@Field("rating") float rating, @Field("idUser") String idUser,
+                                  @Field("idReview") String idReview);
 
     @FormUrlEncoded
     @POST("rating.php")

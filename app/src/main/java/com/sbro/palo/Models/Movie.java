@@ -22,6 +22,9 @@ public class Movie {
     @SerializedName("vote")
     @Expose
     private String vote;
+    @SerializedName("view")
+    @Expose
+    private String view;
     @SerializedName("trailer")
     @Expose
     private String trailer;
@@ -39,12 +42,13 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String id, String title, String description, String rating, String vote, String trailer, String poster, String nation, String date) {
+    public Movie(String id, String title, String description, String rating, String vote, String view, String trailer, String poster, String nation, String date) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.rating = rating;
         this.vote = vote;
+        this.view = view;
         this.trailer = trailer;
         this.poster = poster;
         this.nation = nation;
@@ -121,5 +125,13 @@ public class Movie {
 
     public void setTrailer(String trailer) {
         this.trailer = trailer;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
     }
 }

@@ -14,26 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.FeedbackActivity.FeedbackActivity"></activity>
-        <activity android:name=".Activities.ChangeProfileActivity.ChangeProfileActivity" />
-        <activity android:name=".Activities.ArtistActivity.ArtistActivity" />
-        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" />
-        <activity android:name=".Activities.MyReviewActivity.MyReviewActivity" />
-        <activity android:name=".Activities.SearchActivity.SearchActivity" />
-        <activity android:name=".Activities.MovieList.MovieListActivity" />
-        <activity android:name=".Activities.ReviewDetailActivity.ReviewDetailActivity" />
-        <activity android:name=".Activities.ReviewActivity.ReviewActivity" />
-        <activity android:name=".Activities.MovieDetail.MovieDetailActivity" />
-        <activity android:name=".Activities.SignUp.SignupActivity" />
-        <activity android:name=".Activities.WelcomeActivity">
+        <activity android:name=".Activities.FeedbackActivity.FeedbackActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Activities.ChangeProfileActivity.ChangeProfileActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ArtistActivity.ArtistActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.MyReviewActivity.MyReviewActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.SearchActivity.SearchActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.MovieList.MovieListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ReviewDetailActivity.ReviewDetailActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ReviewActivity.ReviewActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.MovieDetail.MovieDetailActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.SignUp.SignupActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.WelcomeActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LoginActivity.LoginActivity" />
-        <activity android:name=".Activities.MainActivity.MainActivity" />
+        <activity android:name=".Activities.LoginActivity.LoginActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.MainActivity.MainActivity" android:screenOrientation="portrait" />
 
         <receiver android:name=".Utils.NetworkStateReceiver">
             <intent-filter>

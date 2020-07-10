@@ -60,8 +60,9 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
     public static final String ID = "idReview";
     public static final String TITLE = "title";
     public static final String POSTER = "poster";
-    private String id, title, poster;
-    private TextView txtTitle, txtIntro, txtStory, txtAct, txtPic, txtSound, txtFeel, txtMsg, txtEnd;
+    public static final String AUTHOR = "author";
+    private String id, title, poster, author;
+    private TextView txtTitle, txtIntro, txtStory, txtAct, txtPic, txtSound, txtFeel, txtMsg, txtEnd, txtAuthor;
     private ImageView imgStory, imgAct, imgPic, imgSound, imgFeel, imgMsg;
     private ReviewDetailPresenter presenter;
     private ConstraintLayout layout, layoutVote;
@@ -83,6 +84,7 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
         id = intent.getStringExtra(ReviewDetailActivity.ID);
         title = intent.getStringExtra(ReviewDetailActivity.TITLE);
         poster = intent.getStringExtra(ReviewDetailActivity.POSTER);
+        author = intent.getStringExtra(ReviewDetailActivity.AUTHOR);
         presenter = new ReviewDetailPresenter(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -95,6 +97,8 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
             }
         });
         txtTitle.setText(title);
+        txtAuthor.setText(author);
+        txtAuthor.setVisibility(View.VISIBLE);
         if(id != null && !id.equals("")) {
             presenter.showReview(id);
         }
@@ -125,6 +129,7 @@ public class ReviewDetailActivity extends AppCompatActivity implements ReviewDet
         txtFeel = (TextView) findViewById(R.id.review_detail_txt_feel);
         txtMsg = (TextView) findViewById(R.id.review_detail_txt_msg);
         txtEnd = (TextView) findViewById(R.id.review_detail_txt_end);
+        txtAuthor = (TextView) findViewById(R.id.review_detail_txt_author);
         imgStory = (ImageView) findViewById(R.id.review_detail_img_story);
         imgAct = (ImageView) findViewById(R.id.review_detail_img_act);
         imgPic = (ImageView) findViewById(R.id.review_detail_img_pic);

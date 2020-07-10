@@ -261,6 +261,7 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
                 intent.putExtra(ReviewDetailActivity.ID,quotes.get(position).getId());
                 intent.putExtra(ReviewDetailActivity.TITLE,quotes.get(position).getTitle());
                 intent.putExtra(ReviewDetailActivity.POSTER,quotes.get(position).getPoster());
+                intent.putExtra(ReviewDetailActivity.AUTHOR, quotes.get(position).getAuthor());
                 startActivity(intent);
             }
         });

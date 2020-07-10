@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -56,20 +57,19 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("hvhau","onCreate");
         getSupportActionBar().hide();
-
-        startNetworkBroadcastReceiver(this);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         viewPager.setOffscreenPageLimit(3);
 
-
+        startNetworkBroadcastReceiver(this);
     }
 
     @Override
     protected void onPause() {
+        Log.d("hvhau","onPause");
         unregisterNetworkBroadcastReceiver(this);
         currentPage = viewPager.getCurrentItem();
         super.onPause();
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
 
     @Override
     protected void onResume() {
+        Log.d("hvhau","onResume");
         registerNetworkBroadcastReceiver(this);
         super.onResume();
     }
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
 
     @Override
     public void networkAvailable() {
+        Log.d("hvhau","onNet");
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

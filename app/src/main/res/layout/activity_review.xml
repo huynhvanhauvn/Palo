@@ -81,7 +81,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_intro"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,7 +136,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_story"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -191,7 +191,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_act"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -259,7 +259,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_pic"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -327,7 +327,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_sound"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -395,7 +395,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_feel"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -450,7 +450,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_msg"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -490,7 +490,7 @@
 
                     app:layout_constraintTop_toTopOf="parent"
 
-                    android:hint="@string/login_user"
+                    android:hint="@string/review_hint_conclude"
                     android:background="@null"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.cardview.widget.CardView

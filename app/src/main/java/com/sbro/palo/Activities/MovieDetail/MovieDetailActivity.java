@@ -287,6 +287,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
                     intent.putExtra(ReviewDetailActivity.ID,quotes.get(position).getId());
                     intent.putExtra(ReviewDetailActivity.TITLE,title);
                     intent.putExtra(ReviewDetailActivity.POSTER,poster);
+                    intent.putExtra(ReviewDetailActivity.AUTHOR,quotes.get(position).getAuthor());
                     startActivity(intent);
                 }
             });
