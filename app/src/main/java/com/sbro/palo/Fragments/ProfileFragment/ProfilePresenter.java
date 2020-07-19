@@ -89,7 +89,7 @@ public class ProfilePresenter implements ProfileInterface {
 
                     @Override
                     public void onNext(String s) {
-                        if(s != null) {
+                        if(s != null && !s.equals("failed")) {
                             view.updatedAvatar(s);
                         }
                     }

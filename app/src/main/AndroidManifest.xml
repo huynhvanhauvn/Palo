@@ -17,7 +17,7 @@
         <activity android:name=".Activities.FeedbackActivity.FeedbackActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".Activities.ChangeProfileActivity.ChangeProfileActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.ArtistActivity.ArtistActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" android:screenOrientation="portrait" android:showForAllUsers="true"/>
         <activity android:name=".Activities.MyReviewActivity.MyReviewActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.SearchActivity.SearchActivity" android:screenOrientation="portrait" />
         <activity android:name=".Activities.MovieList.MovieListActivity" android:screenOrientation="portrait" />

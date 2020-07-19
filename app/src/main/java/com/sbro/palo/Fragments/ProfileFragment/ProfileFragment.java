@@ -194,7 +194,8 @@ public class ProfileFragment extends Fragment implements ProfileView, NetworkSta
 
     @Override
     public void updatedAvatar(String result) {
-        Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+        imgAvatar.setImageBitmap(selectedImage);
     }
 
     @Override
@@ -247,7 +248,7 @@ public class ProfileFragment extends Fragment implements ProfileView, NetworkSta
             try {
                 imageStream = getContext().getContentResolver().openInputStream(uri);
                 selectedImage = BitmapFactory.decodeStream(imageStream);
-                imgAvatar.setImageBitmap(selectedImage);
+//                imgAvatar.setImageBitmap(selectedImage);
                 File file = new File(storyPath);
                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 MultipartBody.Part body =
