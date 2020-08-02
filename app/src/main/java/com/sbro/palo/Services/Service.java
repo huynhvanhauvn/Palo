@@ -197,4 +197,8 @@ public interface Service {
 
     @GET("artistbirthday.php")
     Observable<ArrayList<Artist>> artistBirthday();
+
+    @FormUrlEncoded
+    @POST("checkmoviewinreward.php")
+    Observable<String> checkMovieWinReward(@Field("idMovie") String idMovie);
 }

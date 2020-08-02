@@ -79,6 +79,28 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
                         }
                     }
                 });
+        Observable<String> rewardObservable = service.checkMovieWinReward(movie.getId());
+        rewardObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        if(s != null && s.equals("true")) {
+                            holder.imgOscar.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.imgOscar.setVisibility(View.GONE);
+                        }
+                    }
+                });
         holder.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +127,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
         private RoundedImageView imgPoster;
         private TextView txtTitle, txtDirector;
         private ConstraintLayout line;
+        private ImageView imgOscar;
 
         public RecylerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +135,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.RecylerVie
             txtTitle = (TextView) itemView.findViewById(R.id.home_txt_title);
             txtDirector = (TextView) itemView.findViewById(R.id.home_txt_director);
             line = (ConstraintLayout) itemView.findViewById(R.id.recent_line);
+            imgOscar = (ImageView) itemView.findViewById(R.id.home_img_oscar);
         }
     }
 
