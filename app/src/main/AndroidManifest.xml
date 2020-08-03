@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sbro.palo">
+    package="com.hhub.palo">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -14,28 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.FeedbackActivity.FeedbackActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activities.ChangeProfileActivity.ChangeProfileActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.ArtistActivity.ArtistActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.ChangePassActivity.ChangePassActivity" android:screenOrientation="portrait" android:showForAllUsers="true"/>
-        <activity android:name=".Activities.MyReviewActivity.MyReviewActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.SearchActivity.SearchActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.MovieList.MovieListActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.ReviewDetailActivity.ReviewDetailActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.ReviewActivity.ReviewActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.MovieDetail.MovieDetailActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.SignUp.SignupActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.WelcomeActivity" android:screenOrientation="portrait">
+        <activity android:name="com.hhub.palo.Activities.FeedbackActivity.FeedbackActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.hhub.palo.Activities.ChangeProfileActivity.ChangeProfileActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.ArtistActivity.ArtistActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.ChangePassActivity.ChangePassActivity" android:screenOrientation="portrait" android:showForAllUsers="true"/>
+        <activity android:name="com.hhub.palo.Activities.MyReviewActivity.MyReviewActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.SearchActivity.SearchActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.MovieList.MovieListActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.ReviewDetailActivity.ReviewDetailActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.ReviewActivity.ReviewActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.MovieDetail.MovieDetailActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.SignUp.SignupActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.WelcomeActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LoginActivity.LoginActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.MainActivity.MainActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.LoginActivity.LoginActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.hhub.palo.Activities.MainActivity.MainActivity" android:screenOrientation="portrait" />
 
-        <receiver android:name=".Utils.NetworkStateReceiver">
+        <receiver android:name="com.hhub.palo.Utils.NetworkStateReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -44,6 +44,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_id" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9741346671607109~8063676985"/>
 
         <provider
             android:name="com.facebook.FacebookContentProvider"

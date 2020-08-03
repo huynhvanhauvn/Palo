@@ -5,11 +5,12 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.sbro.palo"
+        applicationId "com.hhub.palo"
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,4 +58,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.facebook.android:facebook-share:[5,6)'
     implementation 'com.airbnb.android:lottie:3.4.1'
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }
+
+apply plugin: 'com.google.gms.google-services'

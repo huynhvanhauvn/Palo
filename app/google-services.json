@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1087900533431",
+    "firebase_url": "https://palo-ads.firebaseio.com",
+    "project_id": "palo-ads",
+    "storage_bucket": "palo-ads.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087900533431:android:1e162a1930c57e60e54332",
+        "android_client_info": {
+          "package_name": "com.hhub.palo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087900533431-aa9fc78i82gp0q4bq3p7caotr48l0qp8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDweVgv42MZg2K0UxjAo9j6r46X0BFXn-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087900533431-aa9fc78i82gp0q4bq3p7caotr48l0qp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -116,12 +116,31 @@
                     android:visibility="gone"
                     android:layout_margin="8dp"
                     android:src="@drawable/ic_arrow_down"/>
+                <com.google.android.gms.ads.formats.UnifiedNativeAdView
+                    android:id="@+id/home_ads_recent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/home_img_more_recent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/home_ads_recent_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <com.google.android.gms.ads.formats.MediaView
+                            android:id="@+id/home_ads_recent_media"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </com.google.android.gms.ads.formats.UnifiedNativeAdView>
                 <TextView
                     android:id="@+id/home_txt_best"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    app:layout_constraintTop_toBottomOf="@+id/home_img_more_recent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_ads_recent"
                     app:layout_constraintBottom_toTopOf="@id/home_recycler_best"
 
                     android:visibility="gone"
