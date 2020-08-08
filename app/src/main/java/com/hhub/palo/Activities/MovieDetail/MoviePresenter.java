@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.widget.Toast;
 
 import com.hhub.palo.Models.Artist;
+import com.hhub.palo.Models.Category;
 import com.hhub.palo.Models.Movie;
 import com.hhub.palo.Models.Quote;
 import com.hhub.palo.R;
@@ -12,6 +13,7 @@ import com.hhub.palo.Services.APIService;
 import com.hhub.palo.Services.Service;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import rx.Observable;
 import rx.Observer;
@@ -167,6 +169,34 @@ public class MoviePresenter implements MovieInterface {
                     public void onNext(ArrayList<Quote> quotes) {
                         if(quotes != null) {
                             movieView.showReviews(quotes,title,poster);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getCategory(String idMovie) {
+        Observable<ArrayList<Category>> observable = service.categoryMovie(idMovie, Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Category>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Category> categories) {
+                        if(categories != null) {
+                            ArrayList<String> cate = new ArrayList<>();
+                            for(Category category : categories) {
+                                cate.add(category.getTitle());
+                            }
+                            movieView.showCategory(cate);
                         }
                     }
                 });

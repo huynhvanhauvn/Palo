@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hhub.palo.Adapter.ViewPagerAdapter;
 import com.hhub.palo.Fragments.HomeFragment.HomeFragment;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NetworkStateRecei
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         viewPager.setOffscreenPageLimit(3);
+
+//        MobileAds.initialize(this, getString(R.string.native_ads_id));
 
         startNetworkBroadcastReceiver(this);
     }

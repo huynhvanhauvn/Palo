@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
+import com.hhub.palo.Activities.Analyzation.AnalyzationActivity;
 import com.hhub.palo.Activities.ArtistActivity.ArtistActivity;
 import com.hhub.palo.Activities.MovieDetail.MovieDetailActivity;
 import com.hhub.palo.Activities.ReviewDetailActivity.ReviewDetailActivity;
@@ -89,6 +91,15 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
         card2 = (CardView) view.findViewById(R.id.trend_card2);
         card3 = (CardView) view.findViewById(R.id.trend_card3);
 
+        lineChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("hvhau","ok");
+                Intent intent = new Intent(getContext(), AnalyzationActivity.class);
+                startActivity(intent);
+            }
+        });
+
         scrollView.scrollTo(0,0);
         try {
             Field f = swipeRefreshLayout.getClass().getDeclaredField("mCircleView");
@@ -137,7 +148,7 @@ public class TrendFragment extends Fragment implements TrendView, NetworkStateRe
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setEnabled(false);
         lineChart.animateXY(5000,7000);
-        lineChart.setTouchEnabled(false);
+//        lineChart.setTouchEnabled(false);
     }
 
     @Override

@@ -9,4 +9,5 @@ public interface MovieInterface {
     void showRating(String idUser, String idMovie, Context context, Resources resources);
     void actionRating(float rating, String idUser, String idMovie);
     void showReviews(String id, String title, String poster);
+    void getCategory(String idMovie);
 }

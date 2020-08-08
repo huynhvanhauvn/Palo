@@ -42,6 +42,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import co.lujun.androidtagview.TagContainerLayout;
+
 public class MovieDetailActivity extends AppCompatActivity implements MovieView {
 
     private YouTubePlayerView playerView;
@@ -49,10 +51,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     private ConstraintLayout layout, ratingLayout, ratingPoint, title;
     private TextView txtTitle, txtRating, txtDescription,
             txtLabelDescription, txtDirector, txtWriter, txtCast,
-            txtDateLabel, txtDate, txtNationLabel, txtNation, txtReviewsLabel;
+            txtDateLabel, txtDate, txtNationLabel, txtNation, txtReviewsLabel, txtCategoryLabel;
     private RecyclerView recyclerDirector, recyclerWriter, recyclerCast, recyclerQuote;
     private RatingBar ratingBar;
     private CardView cardSend;
+    private TagContainerLayout tagCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         title = (ConstraintLayout) findViewById(R.id.detail_title);
         txtReviewsLabel = (TextView) findViewById(R.id.detail_txt_quote_label);
         recyclerQuote = (RecyclerView) findViewById(R.id.detail_recycler_quote);
+        txtCategoryLabel = (TextView) findViewById(R.id.detail_txt_category_label);
+        tagCategory = (TagContainerLayout) findViewById(R.id.detail_tag_category);
 
         ratingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,6 +197,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         }
         if(movie.getId() != null && !movie.getId().equals("")) {
             presenter.showReviews(movie.getId(),movie.getTitle(),movie.getPoster());
+            presenter.getCategory(movie.getId());
         }
 
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(WelcomeActivity.SHARED_DATA, Context.MODE_PRIVATE);
@@ -285,6 +291,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
                 }
             });
         }
+    }
+
+    @Override
+    public void showCategory(ArrayList<String> categories) {
+        txtCategoryLabel.setVisibility(View.VISIBLE);
+        tagCategory.setTags(categories);
     }
 
     private void showArtist(String idMovie, int role) {

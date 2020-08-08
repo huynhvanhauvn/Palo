@@ -3,11 +3,13 @@ package com.hhub.palo.Services;
 import com.hhub.palo.Models.Artist;
 import com.hhub.palo.Models.ArtistTrend;
 import com.hhub.palo.Models.Background;
+import com.hhub.palo.Models.Category;
 import com.hhub.palo.Models.DateView;
 import com.hhub.palo.Models.Movie;
 import com.hhub.palo.Models.Promotion;
 import com.hhub.palo.Models.Quote;
 import com.hhub.palo.Models.Review;
+import com.hhub.palo.Models.Table;
 import com.hhub.palo.Models.TrendMovie;
 import com.hhub.palo.Models.User;
 
@@ -201,4 +203,11 @@ public interface Service {
     @FormUrlEncoded
     @POST("checkmoviewinreward.php")
     Observable<String> checkMovieWinReward(@Field("idMovie") String idMovie);
+
+    @GET("analyzenation.php")
+    Observable<ArrayList<Table>> analyzeNation();
+
+    @FormUrlEncoded
+    @POST("categorymovie.php")
+    Observable<ArrayList<Category>> categoryMovie(@Field("id") String id, @Field("language") String language);
 }

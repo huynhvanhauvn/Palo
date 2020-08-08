@@ -12,4 +12,5 @@ public interface MovieView {
     void showRating();
     void updateRating(String rating);
     void showReviews(ArrayList<Quote> quotes, String title, String poster);
+    void showCategory(ArrayList<String> categories);
 }

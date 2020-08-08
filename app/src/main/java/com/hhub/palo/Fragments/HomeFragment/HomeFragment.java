@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.formats.MediaView;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
@@ -195,6 +199,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
                     public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        Log.d("hvhau","ad");
                         UnifiedNativeAdView adView = (UnifiedNativeAdView) view.findViewById(R.id.home_ads_recent);
                         TextView txtHeadline = (TextView) view.findViewById(R.id.home_ads_recent_title);
                         MediaView mediaContent = (MediaView) view.findViewById(R.id.home_ads_recent_media);
@@ -204,6 +209,8 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
                         adView.setMediaView(mediaContent);
                     }
                 });
+        AdLoader adLoader = builder.build();
+        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
