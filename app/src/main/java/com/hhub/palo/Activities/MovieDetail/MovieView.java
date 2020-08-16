@@ -1,8 +1,10 @@
 package com.hhub.palo.Activities.MovieDetail;
 
 import com.hhub.palo.Models.Artist;
+import com.hhub.palo.Models.Category;
 import com.hhub.palo.Models.Movie;
 import com.hhub.palo.Models.Quote;
+import com.hhub.palo.Models.Reward;
 
 import java.util.ArrayList;
 
@@ -12,5 +14,6 @@ public interface MovieView {
     void showRating();
     void updateRating(String rating);
     void showReviews(ArrayList<Quote> quotes, String title, String poster);
-    void showCategory(ArrayList<String> categories);
+    void showCategory(ArrayList<String> categorytags, ArrayList<Category> categories);
+    void showReward(ArrayList<Reward> rewards);
 }

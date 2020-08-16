@@ -27,8 +27,12 @@ import java.util.ArrayList;
 public class MovieListActivity extends AppCompatActivity implements MovieListView {
 
     public static final String TYPE = "type";
+    public static final String KEY = "key";
+    public static final String TITLE = "title";
     public static final int TYPE_RECENT = 432;
     public static final int TYPE_BEST = 433;
+    public static final int TYPE_NATION = 235;
+    public static final int TYPE_CATEGORY = 408;
     private RecyclerView recycler;
     private MovieListPresenter presenter;
     private ConstraintLayout layout;
@@ -60,19 +64,25 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
             case TYPE_BEST:
                 txtTitle.setText(getResources().getString(R.string.home_best));
                 break;
+            case TYPE_NATION:
+                txtTitle.setText(intent.getStringExtra(KEY) != null ? intent.getStringExtra(KEY) : "");
+                break;
+            case TYPE_CATEGORY:
+                txtTitle.setText(intent.getStringExtra(TITLE) != null ? intent.getStringExtra(TITLE) : "");
+                break;
         }
-        presenter.showList(type);
+        presenter.showList(type, intent.getStringExtra(KEY));
     }
 
     @Override
     public void showList(final ArrayList<Movie> movies) {
-        RecentAdapter adapter = new RecentAdapter(getApplicationContext(),movies);
+        RecentAdapter adapter = new RecentAdapter(getApplicationContext(), movies);
         recycler.setAdapter(adapter);
         adapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), MovieDetailActivity.class);
-                intent.putExtra("id",movies.get(position).getId());
+                intent.putExtra("id", movies.get(position).getId());
                 startActivity(intent);
             }
         });

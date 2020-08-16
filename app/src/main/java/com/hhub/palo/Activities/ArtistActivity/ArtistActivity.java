@@ -7,7 +7,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.hhub.palo.Activities.WelcomeActivity;
+import com.hhub.palo.Adapter.AwardAdapter;
+import com.hhub.palo.Models.Reward;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.hhub.palo.Activities.MovieDetail.MovieDetailActivity;
 import com.hhub.palo.Adapter.RecentAdapter;
@@ -33,7 +38,7 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
     private ArtistPresenter presenter;
     private RoundedImageView imgAvatar;
     private TextView txtName, txtOld, txtBirthday, txtRole, txtNation, txtLabelDirect, txtLabelWrite, txtLabelAct;
-    private RecyclerView recyclerDirect, recyclerWrite, recyclerAct;
+    private RecyclerView recyclerDirect, recyclerWrite, recyclerAct, recyclerReward;
     private ConstraintLayout layout;
     private Artist mArtist = new Artist();
     private ConstraintLayout layoutBirthday, layoutRole, layoutNation;
@@ -60,12 +65,17 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
         layoutBirthday = (ConstraintLayout) findViewById(R.id.artist_layout_birthday);
         layoutRole = (ConstraintLayout) findViewById(R.id.artist_layout_role);
         layoutNation = (ConstraintLayout) findViewById(R.id.artist_layout_nation);
+        recyclerReward = (RecyclerView) findViewById(R.id.artist_recycler_reward);
 
         presenter = new ArtistPresenter(this);
         Intent intent = getIntent();
         id = intent.getStringExtra(ID);
         if(!id.equals("")) {
-            presenter.getArtist(id);
+            SharedPreferences preferences = getSharedPreferences(WelcomeActivity.SHARED_DATA, Context.MODE_PRIVATE);
+            String idUser = preferences.getString(WelcomeActivity.USER_ID,"");
+            if(!idUser.equals("")) {
+                presenter.getArtist(id, idUser);
+            }
         }
     }
 
@@ -78,6 +88,7 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
         txtBirthday.setText(artist.getBirthday());
         txtRole.setText(artist.getRole());
         txtNation.setText(artist.getNation());
+        presenter.getReward(artist.getId());
         presenter.getDirectList(artist.getId());
         presenter.getWriteList(artist.getId());
         presenter.getActList(artist.getId());
@@ -171,5 +182,15 @@ public class ArtistActivity extends AppCompatActivity implements ArtistView {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void showReward(ArrayList<Reward> rewards) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerReward.setLayoutManager(layoutManager);
+        AwardAdapter adapter = new AwardAdapter(rewards, getApplicationContext());
+        recyclerReward.setAdapter(adapter);
+        recyclerReward.setVisibility(View.VISIBLE);
     }
 }

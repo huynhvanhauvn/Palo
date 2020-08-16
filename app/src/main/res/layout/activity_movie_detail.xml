@@ -89,12 +89,24 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detail_recycler_reward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@+id/detail_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                android:visibility="gone"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="16dp"/>
             <TextView
                 android:id="@+id/detail_txt_description_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                app:layout_constraintTop_toBottomOf="@+id/detail_title"
+                app:layout_constraintTop_toBottomOf="@+id/detail_recycler_reward"
                 app:layout_constraintLeft_toLeftOf="parent"
 
                 android:visibility="invisible"

@@ -2,6 +2,7 @@ package com.hhub.palo.Activities.Analyzation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.hhub.palo.Activities.MovieList.MovieListActivity;
 import com.hhub.palo.Models.DateView;
 import com.hhub.palo.Models.Table;
 import com.hhub.palo.R;
@@ -61,7 +63,10 @@ public class AnalyzationActivity extends AppCompatActivity implements AnalyzeVie
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 PieEntry pieEntry = (PieEntry) e;
-                Toast.makeText(getApplicationContext(),pieEntry.getLabel(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AnalyzationActivity.this, MovieListActivity.class);
+                intent.putExtra(MovieListActivity.TYPE, MovieListActivity.TYPE_NATION);
+                intent.putExtra(MovieListActivity.KEY, pieEntry.getLabel());
+                startActivity(intent);
             }
 
             @Override

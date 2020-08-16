@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Palo</string>
     <string name="native_ads_id">ca-app-pub-9741346671607109/1306696944</string>
-<!--    <string name="native_ads_id">ca-app-pub-3940256099942544/2247696110</string>-->
+<!--    <string name="native_ads_id">ca-app-pub-3940256099942544/1044960115</string>-->
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

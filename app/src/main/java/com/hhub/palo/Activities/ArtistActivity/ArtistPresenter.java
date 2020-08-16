@@ -2,6 +2,7 @@ package com.hhub.palo.Activities.ArtistActivity;
 
 import com.hhub.palo.Models.Artist;
 import com.hhub.palo.Models.Movie;
+import com.hhub.palo.Models.Reward;
 import com.hhub.palo.Services.APIService;
 import com.hhub.palo.Services.Service;
 
@@ -22,8 +23,8 @@ public class ArtistPresenter implements ArtistInterface {
     }
 
     @Override
-    public void getArtist(String id) {
-        Observable<Artist> observable = service.artistDetail(id, Locale.getDefault().getLanguage());
+    public void getArtist(String id, String idUser) {
+        Observable<Artist> observable = service.artistDetail(id, Locale.getDefault().getLanguage(), idUser);
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Artist>() {
                     @Override
@@ -112,6 +113,30 @@ public class ArtistPresenter implements ArtistInterface {
                     public void onNext(ArrayList<Movie> movies) {
                         if(movies != null && movies.size() > 0) {
                             view.showActList(movies);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getReward(String idArtist) {
+        Observable<ArrayList<Reward>> observable = service.oscarArtist(idArtist, Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Reward>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Reward> rewards) {
+                        if(rewards != null && rewards.size()>0){
+                            view.showReward(rewards);
                         }
                     }
                 });

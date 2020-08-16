@@ -34,7 +34,9 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.VideoOptions;
 import com.google.android.gms.ads.formats.MediaView;
+import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 import com.hhub.palo.Activities.ArtistActivity.ArtistActivity;
@@ -195,6 +197,14 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
 
         presenter.showRecentMovie();
 
+        VideoOptions videoOptions = new VideoOptions.Builder()
+                .setStartMuted(false)
+                .build();
+
+        NativeAdOptions adOptions = new NativeAdOptions.Builder()
+                .setVideoOptions(videoOptions)
+                .build();
+
         AdLoader.Builder builder = new AdLoader.Builder(getContext(), getString(R.string.native_ads_id))
                 .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
                     @Override
@@ -208,7 +218,7 @@ public class HomeFragment extends Fragment implements HomeView, NetworkStateRece
                         mediaContent.setMediaContent(unifiedNativeAd.getMediaContent());
                         adView.setMediaView(mediaContent);
                     }
-                });
+                }).withNativeAdOptions(adOptions);
         AdLoader adLoader = builder.build();
         adLoader.loadAd(new AdRequest.Builder().build());
     }

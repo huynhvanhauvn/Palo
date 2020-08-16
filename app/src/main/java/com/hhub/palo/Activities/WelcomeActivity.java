@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
     public static final String USER_ID = "userid";
     public static final String IS_LOGGED = "isLogged";
     private LottieAnimationView imgLogo;
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 2000;
     private Animation anim_FadeIn;
 
     @Override

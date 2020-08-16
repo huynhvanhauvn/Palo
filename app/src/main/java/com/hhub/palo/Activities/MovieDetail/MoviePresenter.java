@@ -8,6 +8,7 @@ import com.hhub.palo.Models.Artist;
 import com.hhub.palo.Models.Category;
 import com.hhub.palo.Models.Movie;
 import com.hhub.palo.Models.Quote;
+import com.hhub.palo.Models.Reward;
 import com.hhub.palo.R;
 import com.hhub.palo.Services.APIService;
 import com.hhub.palo.Services.Service;
@@ -30,8 +31,8 @@ public class MoviePresenter implements MovieInterface {
     }
 
     @Override
-    public void showMovie(String id, String language) {
-        Observable<Movie> movieObservable = service.movie(id, language);
+    public void showMovie(String id, String language, String idUser) {
+        Observable<Movie> movieObservable = service.movie(id, language, idUser);
         movieObservable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Movie>() {
                     @Override
@@ -191,12 +192,36 @@ public class MoviePresenter implements MovieInterface {
 
                     @Override
                     public void onNext(ArrayList<Category> categories) {
-                        if(categories != null) {
+                        if(categories != null && categories.size() > 0) {
                             ArrayList<String> cate = new ArrayList<>();
                             for(Category category : categories) {
                                 cate.add(category.getTitle());
                             }
-                            movieView.showCategory(cate);
+                            movieView.showCategory(cate, categories);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void getReward(String idMovie) {
+        Observable<ArrayList<Reward>> observable = service.oscarMovie(idMovie, Locale.getDefault().getLanguage());
+        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<Reward>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<Reward> rewards) {
+                        if(rewards != null && rewards.size()>0){
+                            movieView.showReward(rewards);
                         }
                     }
                 });

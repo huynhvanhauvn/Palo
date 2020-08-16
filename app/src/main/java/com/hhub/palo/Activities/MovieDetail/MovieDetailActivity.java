@@ -22,6 +22,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.hhub.palo.Activities.MovieList.MovieListActivity;
+import com.hhub.palo.Adapter.AwardAdapter;
+import com.hhub.palo.Models.Category;
+import com.hhub.palo.Models.Reward;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -43,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieView {
 
@@ -52,7 +57,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     private TextView txtTitle, txtRating, txtDescription,
             txtLabelDescription, txtDirector, txtWriter, txtCast,
             txtDateLabel, txtDate, txtNationLabel, txtNation, txtReviewsLabel, txtCategoryLabel;
-    private RecyclerView recyclerDirector, recyclerWriter, recyclerCast, recyclerQuote;
+    private RecyclerView recyclerDirector, recyclerWriter, recyclerCast, recyclerQuote, recyclerReward;
     private RatingBar ratingBar;
     private CardView cardSend;
     private TagContainerLayout tagCategory;
@@ -90,6 +95,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         recyclerQuote = (RecyclerView) findViewById(R.id.detail_recycler_quote);
         txtCategoryLabel = (TextView) findViewById(R.id.detail_txt_category_label);
         tagCategory = (TagContainerLayout) findViewById(R.id.detail_tag_category);
+        recyclerReward = (RecyclerView) findViewById(R.id.detail_recycler_reward);
 
         ratingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +108,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         String id = intent.getStringExtra("id");
         if(id != null) {
             Locale.getDefault().getLanguage();
-            presenter.showMovie(id,Locale.getDefault().getLanguage());
+            SharedPreferences preferences = getSharedPreferences(WelcomeActivity.SHARED_DATA, Context.MODE_PRIVATE);
+            String idUser = preferences.getString(WelcomeActivity.USER_ID,"");
+            if(!idUser.equals("")) {
+                presenter.showMovie(id,Locale.getDefault().getLanguage(),idUser);
+            }
         }
     }
 
@@ -198,6 +208,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
         if(movie.getId() != null && !movie.getId().equals("")) {
             presenter.showReviews(movie.getId(),movie.getTitle(),movie.getPoster());
             presenter.getCategory(movie.getId());
+            presenter.getReward(movie.getId());
         }
 
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(WelcomeActivity.SHARED_DATA, Context.MODE_PRIVATE);
@@ -294,9 +305,44 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieView 
     }
 
     @Override
-    public void showCategory(ArrayList<String> categories) {
+    public void showCategory(final ArrayList<String> categorytags, final ArrayList<Category> categories) {
         txtCategoryLabel.setVisibility(View.VISIBLE);
-        tagCategory.setTags(categories);
+        tagCategory.setTags(categorytags);
+        tagCategory.setOnTagClickListener(new TagView.OnTagClickListener() {
+            @Override
+            public void onTagClick(int position, String text) {
+                Intent intent = new Intent(MovieDetailActivity.this, MovieListActivity.class);
+                intent.putExtra(MovieListActivity.TYPE, MovieListActivity.TYPE_CATEGORY);
+                intent.putExtra(MovieListActivity.KEY, categories.get(position).getId());
+                intent.putExtra(MovieListActivity.TITLE, categorytags.get(position));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onTagLongClick(int position, String text) {
+
+            }
+
+            @Override
+            public void onSelectedTagDrag(int position, String text) {
+
+            }
+
+            @Override
+            public void onTagCrossClick(int position) {
+
+            }
+        });
+    }
+
+    @Override
+    public void showReward(ArrayList<Reward> rewards) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerReward.setLayoutManager(layoutManager);
+        AwardAdapter adapter = new AwardAdapter(rewards, getApplicationContext());
+        recyclerReward.setAdapter(adapter);
+        recyclerReward.setVisibility(View.VISIBLE);
     }
 
     private void showArtist(String idMovie, int role) {

@@ -9,6 +9,7 @@ import com.hhub.palo.Models.Movie;
 import com.hhub.palo.Models.Promotion;
 import com.hhub.palo.Models.Quote;
 import com.hhub.palo.Models.Review;
+import com.hhub.palo.Models.Reward;
 import com.hhub.palo.Models.Table;
 import com.hhub.palo.Models.TrendMovie;
 import com.hhub.palo.Models.User;
@@ -57,7 +58,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("movie.php")
-    Observable<Movie> movie(@Field("id") String id, @Field("language") String language);
+    Observable<Movie> movie(@Field("id") String id, @Field("language") String language, @Field("idUser") String idUser);
 
     @FormUrlEncoded
     @POST("movieinfo.php")
@@ -72,7 +73,7 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("artistdetail.php")
-    Observable<Artist> artistDetail(@Field("id") String id, @Field("language") String language);
+    Observable<Artist> artistDetail(@Field("id") String id, @Field("language") String language, @Field("idUser") String idUser);
 
     @FormUrlEncoded
     @POST("vote.php")
@@ -106,13 +107,14 @@ public interface Service {
                               @Field("soundImage") String soundImage, @Field("feel") String feel,
                               @Field("feelImage") String feelImg, @Field("message") String msg,
                               @Field("messageImage") String msgImg, @Field("end") String end);
+
     @FormUrlEncoded
     @POST("reviewupdate.php")
     Observable<String> updateReview(@Field("id") String id,
-                              @Field("introduction") String intro, @Field("story") String story,
-                              @Field("acting") String act, @Field("picture") String pic,
-                              @Field("sound") String sound, @Field("feel") String feel,
-                              @Field("message") String msg, @Field("end") String end);
+                                    @Field("introduction") String intro, @Field("story") String story,
+                                    @Field("acting") String act, @Field("picture") String pic,
+                                    @Field("sound") String sound, @Field("feel") String feel,
+                                    @Field("message") String msg, @Field("end") String end);
 
     @Multipart
     @POST("uploadImage.php")
@@ -126,7 +128,7 @@ public interface Service {
     @Multipart
     @POST("updateavatar.php")
     Observable<String> updateAvatar(@Part MultipartBody.Part file, @Query("id") String idUser,
-                                   @Query("oldFile") String oldFile);
+                                    @Query("oldFile") String oldFile);
 
     @FormUrlEncoded
     @POST("quote.php")
@@ -178,7 +180,7 @@ public interface Service {
     @FormUrlEncoded
     @POST("updateuser.php")
     Observable<String> updateUser(@Field("id") String id, @Field("fullName") String fullName,
-                                            @Field("gender") String gender, @Field("birthday") String birthday);
+                                  @Field("gender") String gender, @Field("birthday") String birthday);
 
     @GET("artisttrendcast.php")
     Observable<ArrayList<ArtistTrend>> hotCast();
@@ -210,4 +212,20 @@ public interface Service {
     @FormUrlEncoded
     @POST("categorymovie.php")
     Observable<ArrayList<Category>> categoryMovie(@Field("id") String id, @Field("language") String language);
+
+    @FormUrlEncoded
+    @POST("movienation.php")
+    Observable<ArrayList<Movie>> movieNation(@Field("nation") String nation);
+
+    @FormUrlEncoded
+    @POST("moviecategory.php")
+    Observable<ArrayList<Movie>> movieCategory(@Field("category") String category);
+
+    @FormUrlEncoded
+    @POST("oscarmovie.php")
+    Observable<ArrayList<Reward>> oscarMovie(@Field("idMovie") String idMovie, @Field("language") String language);
+
+    @FormUrlEncoded
+    @POST("oscarartist.php")
+    Observable<ArrayList<Reward>> oscarArtist(@Field("idArtist") String idArtist, @Field("language") String language);
 }
